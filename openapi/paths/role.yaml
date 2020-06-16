@@ -1,0 +1,21 @@
+get:
+  summary: Получить данные о роли
+  operationId: getOrgRole
+  tags:
+    - roles
+  parameters:
+    - $ref: '../components/parameters/orgId.yaml'
+    - $ref: '../components/parameters/roleId.yaml'
+  responses:
+    '200':
+      description: Найдены роли
+      content:
+        application/json:
+          schema:
+            $ref: '../components/schemas/Role.yaml'
+    '403':
+      description: Данные недоступны
+    '404':
+      description: Организация не найдена
+    '400':
+      $ref: '../components/responses/BadRequest.yaml'

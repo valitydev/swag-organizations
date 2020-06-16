@@ -1,0 +1,63 @@
+get:
+  summary: Перечислить доступные организации
+  operationId: listOrgMembership
+  tags:
+    - orgs
+  responses:
+    '200':
+      description: Найдены доступные организации
+      content:
+        application/json:
+          schema:
+            type: object
+            required:
+              - results
+            properties:
+              results:
+                type: array
+                items:
+                  $ref: '../components/schemas/Organisation.yaml'
+    '400':
+      $ref: '../components/responses/BadRequest.yaml'
+
+post:
+  summary: Вступить в организацию по приглашению
+  operationId: joinOrg
+  tags:
+    - orgs
+  requestBody:
+    content:
+      application/json:
+        schema:
+          $ref: '../components/schemas/OrganisationJoinRequest.yaml'
+  responses:
+    '201':
+      description: Пользователь вступил в организацию
+      content:
+        application/json:
+          schema:
+            $ref: '../components/schemas/OrganisationMembership.yaml'
+      headers:
+        location:
+          description: URL членства в организации
+          required: true
+          schema:
+            type: string
+            format: uri
+            example: '//user/membership/bdaf9e76-1c5b-4798-b154-19b87a61dc94'
+    '422':
+      description: Невозможно совершить операцию
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              code:
+                type: string
+                enum:
+                  - invitationExpired
+              message:
+                description: Человекочитаемое описание ошибки
+                type: string
+    '400':
+      $ref: '../components/responses/BadRequest.yaml'

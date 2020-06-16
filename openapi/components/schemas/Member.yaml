@@ -1,0 +1,20 @@
+description: Сотрудник организации
+type: object
+required:
+  - id
+  - userName
+  - userTag
+  - roles
+properties:
+  # TODO
+  # Нужен ли здесь email? Пока предполагаем, что email сотрудника это его дело,
+  # администраторам/владельцам он неинтересен, используется только для
+  # коммуникации со стороны системы для отправки сервисных сообщений.
+  id:
+    $ref: './UserId.yaml'
+  userName:
+    $ref: './UserName.yaml'
+  userTag:
+    $ref: './UserTag.yaml'
+  roles:
+    $ref: './MemberRoleSet.yaml'

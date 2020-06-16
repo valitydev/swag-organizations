@@ -1,0 +1,21 @@
+get:
+  summary: Получить данные сотрудника
+  operationId: getOrgMember
+  tags:
+    - members
+  parameters:
+    - $ref: '../components/parameters/orgId.yaml'
+    - $ref: '../components/parameters/userId.yaml'
+  responses:
+    '200':
+      description: Данные найдены
+      content:
+        application/json:
+          schema:
+            $ref: '../components/schemas/Member.yaml'
+    '403':
+      description: Данные недоступны
+    '404':
+      description: Сотрудник не найден
+    '400':
+      $ref: '../components/responses/BadRequest.yaml'

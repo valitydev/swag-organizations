@@ -1,0 +1,9 @@
+description: Идентификатор роли
+anyOf:
+  - enum:
+    - Administrator
+    - Accountant
+    - Manager
+  - type: string
+    minLength: 1
+    maxLength: 40

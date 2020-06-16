@@ -1,0 +1,35 @@
+get:
+  summary: Посмотреть членство в организации
+  operationId: inquireOrgMembership
+  tags:
+    - orgs
+  parameters:
+    - $ref: '../components/parameters/orgId.yaml'
+  responses:
+    '200':
+      description: Получены данные членства
+      content:
+        application/json:
+          schema:
+            $ref: '../components/schemas/OrganisationMembership.yaml'
+    '404':
+      description: Организация не найдена
+    '400':
+      $ref: '../components/responses/BadRequest.yaml'
+
+delete:
+  summary: Отменить членство в организации
+  operationId: cancelOrgMembership
+  tags:
+    - orgs
+  parameters:
+    - $ref: '../components/parameters/orgId.yaml'
+  responses:
+    '204':
+      description: Членство отменено
+    '404':
+      description: Организация не найдена
+    '403':
+      description: Операция недоступна
+    '400':
+      $ref: '../components/responses/BadRequest.yaml'

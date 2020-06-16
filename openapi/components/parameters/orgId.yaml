@@ -1,0 +1,6 @@
+name: orgId
+in: path
+description: Идентификатор организации
+required: true
+schema:
+  $ref: '../schemas/OrganisationId.yaml'

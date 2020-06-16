@@ -1,0 +1,6 @@
+name: roleId
+in: path
+description: Идентификатор роли
+required: true
+schema:
+  $ref: '../schemas/RoleId.yaml'

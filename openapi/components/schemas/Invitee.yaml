@@ -1,0 +1,25 @@
+description: Приглашаемый пользователь
+type: object
+required:
+  - contact
+  - roles
+properties:
+  contact:
+    description: Контактные данные для отправки приглашения
+    type: object
+    required:
+      - type
+      - email
+    properties:
+      type:
+        enum:
+          - EMail
+      email:
+        description: Адрес электронной почты
+        type: string
+        format: email
+  roles:
+    allOf:
+      - description: |
+          Роли, которые будут назначены сотруднику после принятия им приглашения
+      - $ref: './MemberRoleSet.yaml'

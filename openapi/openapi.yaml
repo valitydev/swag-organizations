@@ -1,0 +1,52 @@
+openapi: 3.0.3
+info:
+  version: 1.0.0
+  title: RBKmoney Organisations API
+  description:
+    $ref: './docs/api.md'
+  termsOfService: 'https://rbk.money/'
+  contact:
+    name: RBKmoney Support Team
+    email: support@rbk.money
+    url: 'https://developer.rbk.money'
+  license:
+    name: Apache 2.0
+    url: https://www.apache.org/licenses/LICENSE-2.0.html
+security:
+  - bearer: []
+tags:
+  - name: orgs
+    x-displayName: Организации
+  - name: members
+    x-displayName: Сотрудники
+  - name: roles
+    x-displayName: Роли
+  - name: error-codes
+    x-displayName: Коды ошибок
+    description:
+      $ref: './docs/error-codes.md'
+paths:
+  /user/membership:
+    $ref: ./paths/membership.yaml
+  /user/membership/{orgId}:
+    $ref: ./paths/orgMembership.yaml
+  /orgs/{orgId}:
+    $ref: ./paths/org.yaml
+  /orgs/{orgId}/roles:
+    $ref: ./paths/roles.yaml
+  /orgs/{orgId}/roles/{roleId}:
+    $ref: ./paths/role.yaml
+  /orgs/{orgId}/members:
+    $ref: ./paths/members.yaml
+  /orgs/{orgId}/members/{userId}:
+    $ref: ./paths/member.yaml
+  /orgs/{orgId}/members/{userId}/roles:
+    $ref: ./paths/memberRoles.yaml
+  /orgs/{orgId}/invitations:
+    $ref: ./paths/invitations.yaml
+servers:
+  - url: 'https://api.rbk.money/org/v1'
+components:
+  securitySchemes:
+    bearer:
+      $ref: './components/security-schemes/Bearer.yaml'

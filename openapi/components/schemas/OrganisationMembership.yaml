@@ -1,0 +1,9 @@
+type: object
+required:
+  - org
+  - member
+properties:
+  org:
+    $ref: './Organisation.yaml'
+  member:
+    $ref: './Member.yaml'

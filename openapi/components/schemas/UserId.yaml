@@ -1,0 +1,6 @@
+description: Идентификатор пользователя
+type: string
+minLength: 1
+maxLength: 40
+example: fdbfae05-44d0-4ae4-8745-6dcfafc6a75c
+readOnly: true

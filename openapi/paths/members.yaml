@@ -1,0 +1,27 @@
+get:
+  summary: Перечислить сотрудников организации
+  operationId: listOrgMembers
+  tags:
+    - members
+  parameters:
+    - $ref: '../components/parameters/orgId.yaml'
+  responses:
+    '200':
+      description: Найдены сотрудники
+      content:
+        application/json:
+          schema:
+            type: object
+            required:
+              - results
+            properties:
+              results:
+                type: array
+                items:
+                  $ref: '../components/schemas/Member.yaml'
+    '403':
+      description: Данные недоступны
+    '404':
+      description: Организация не найдена
+    '400':
+      $ref: '../components/responses/BadRequest.yaml'

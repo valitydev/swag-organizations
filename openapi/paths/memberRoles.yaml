@@ -1,0 +1,105 @@
+get:
+  summary: Перечислить роли сотрудника
+  operationId: listMemberRoles
+  tags:
+    - members
+  parameters:
+    - $ref: '../components/parameters/orgId.yaml'
+    - $ref: '../components/parameters/userId.yaml'
+  responses:
+    '200':
+      description: Роли найдены
+      content:
+        application/json:
+          schema:
+            # TODO
+            # Вообще говоря, мы для единообразия могли бы даже ввести здесь
+            # полноценную коллекцию (которую назвали бы видимо role bindings)
+            # со своими идентификаторами и стейтом. Но непонятно, надо ли?
+            $ref: '../components/schemas/MemberRoleSet.yaml'
+    '403':
+      description: Данные недоступны
+    '404':
+      description: Сотрудник не найден
+    '400':
+      $ref: '../components/responses/BadRequest.yaml'
+
+put:
+  summary: Назначить сотруднику роль
+  operationId: assignMemberRole
+  tags:
+    - members
+  parameters:
+    - $ref: '../components/parameters/orgId.yaml'
+    - $ref: '../components/parameters/userId.yaml'
+  requestBody:
+    content:
+      application/json:
+        schema:
+          $ref: '../components/schemas/MemberRole.yaml'
+  responses:
+    # TODO
+    # Нужно ли возвращать получившийся набор ролей?
+    '204':
+      description: Роль назначена
+    '422':
+      # TODO
+      # Может упростить пока и не энфорсить это требование на API?
+      description: Невозможно совершить операцию
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              code:
+                type: string
+                enum:
+                  - onlyRoleLeft
+              message:
+                description: Человекочитаемое описание ошибки
+                type: string
+    '403':
+      description: Операция недоступна
+    '404':
+      description: Сотрудник не найден
+    '400':
+      $ref: '../components/responses/BadRequest.yaml'
+
+delete:
+  summary: Снять роль сотрудника
+  operationId: removeMemberRole
+  tags:
+    - members
+  parameters:
+    - $ref: '../components/parameters/orgId.yaml'
+    - $ref: '../components/parameters/userId.yaml'
+  requestBody:
+    content:
+      application/json:
+        schema:
+          $ref: '../components/schemas/MemberRole.yaml'
+  responses:
+    # TODO
+    # Нужно ли как-то сигнализировать клиенту, что такой роли никогда и не было?
+    '204':
+      description: Роль снята
+    '422':
+      description: Невозможно совершить операцию
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              code:
+                type: string
+                enum:
+                  - invalidRole
+              message:
+                description: Человекочитаемое описание ошибки
+                type: string
+    '403':
+      description: Операция недоступна
+    '404':
+      description: Сотрудник не найден
+    '400':
+      $ref: '../components/responses/BadRequest.yaml'
