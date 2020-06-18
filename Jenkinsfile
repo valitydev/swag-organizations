@@ -1,7 +1,7 @@
 #!groovy
 // -*- mode: groovy -*-
 
-build('swag-organisations', 'docker-host', finalHook) {
+build('swag-organisations', 'docker-host') {
   checkoutRepo()
   loadBuildUtils('build-utils')
 
