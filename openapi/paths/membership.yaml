@@ -44,7 +44,7 @@ post:
           schema:
             type: string
             format: uri
-            example: '//user/membership/bdaf9e76-1c5b-4798-b154-19b87a61dc94'
+            example: '//user/membership/or_af9e76uc5b47h8b154.19b8xa61dc94'
     '422':
       description: Невозможно совершить операцию
       content:

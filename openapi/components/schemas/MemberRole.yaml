@@ -19,4 +19,4 @@ properties:
         type: string
         minLength: 1
         maxLength: 40
-        example: 1627839d-a482-428a-b7ed-cce1136858dc
+        example: sh_27839dt482v28ab7escze113y858dp
