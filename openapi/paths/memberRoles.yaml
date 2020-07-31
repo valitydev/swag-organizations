@@ -68,7 +68,7 @@ put:
       $ref: '../components/responses/BadRequest.yaml'
 
 delete:
-  summary: Снять роль сотрудника
+  summary: Снять роль с сотрудника
   operationId: removeMemberRole
   tags:
     - members
