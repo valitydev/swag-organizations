@@ -4,6 +4,7 @@ post:
   tags:
     - members
   parameters:
+    - $ref: '../components/parameters/requestId.yaml'
     - $ref: '../components/parameters/orgId.yaml'
   requestBody:
     description: Данные нового приглашения

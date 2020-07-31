@@ -4,6 +4,7 @@ get:
   tags:
     - members
   parameters:
+    - $ref: '../components/parameters/requestId.yaml'
     - $ref: '../components/parameters/orgId.yaml'
     - $ref: '../components/parameters/userId.yaml'
   responses:
@@ -30,6 +31,7 @@ put:
   tags:
     - members
   parameters:
+    - $ref: '../components/parameters/requestId.yaml'
     - $ref: '../components/parameters/orgId.yaml'
     - $ref: '../components/parameters/userId.yaml'
   requestBody:
@@ -71,6 +73,7 @@ delete:
   tags:
     - members
   parameters:
+    - $ref: '../components/parameters/requestId.yaml'
     - $ref: '../components/parameters/orgId.yaml'
     - $ref: '../components/parameters/userId.yaml'
   requestBody:

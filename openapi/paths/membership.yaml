@@ -3,6 +3,8 @@ get:
   operationId: listOrgMembership
   tags:
     - orgs
+  parameters:
+    - $ref: '../components/parameters/requestId.yaml'
   responses:
     '200':
       description: Найдены доступные организации
@@ -25,6 +27,8 @@ post:
   operationId: joinOrg
   tags:
     - orgs
+  parameters:
+    - $ref: '../components/parameters/requestId.yaml'
   requestBody:
     content:
       application/json:

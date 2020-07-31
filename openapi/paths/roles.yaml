@@ -4,6 +4,7 @@ get:
   tags:
     - roles
   parameters:
+    - $ref: '../components/parameters/requestId.yaml'
     - $ref: '../components/parameters/orgId.yaml'
   responses:
     '200':
