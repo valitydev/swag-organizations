@@ -1,5 +1,5 @@
 get:
-  summary: Посмотреть членство в организации
+  summary: Посмотреть своё членство в организации
   operationId: inquireOrgMembership
   tags:
     - orgs
@@ -19,7 +19,7 @@ get:
       $ref: '../components/responses/BadRequest.yaml'
 
 delete:
-  summary: Отменить членство в организации
+  summary: Отменить своё членство в организации
   operationId: cancelOrgMembership
   tags:
     - orgs
