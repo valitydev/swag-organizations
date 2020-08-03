@@ -1,4 +1,6 @@
 type: object
+required:
+  - invitation
 properties:
   # TODO
   # Предполагается, что у меня как у пользователя могут быть _разные_ имена и
