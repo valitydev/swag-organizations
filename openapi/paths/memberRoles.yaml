@@ -82,10 +82,8 @@ delete:
         schema:
           $ref: '../components/schemas/MemberRole.yaml'
   responses:
-    # TODO
-    # Нужно ли как-то сигнализировать клиенту, что такой роли никогда и не было?
     '204':
-      description: Роль снята
+      description: Сотрудник более не обладает указанной ролью
     '422':
       description: Невозможно совершить операцию
       content:
