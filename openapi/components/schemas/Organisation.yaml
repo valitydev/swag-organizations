@@ -4,6 +4,7 @@ required:
   - id
   - createdAt
   - name
+  - owner
 properties:
   id:
     $ref: './OrganisationId.yaml'
