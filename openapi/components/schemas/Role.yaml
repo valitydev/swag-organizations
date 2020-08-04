@@ -13,7 +13,7 @@ properties:
     maxLength: 100
     example: 'Shop Manager'
   scopes:
-    description: Доступные ограничения для роли
+    description: Возможные области действия для роли
     type: array
     uniqueItems: true
     items:

@@ -6,7 +6,7 @@ properties:
   roleId:
     $ref: './RoleId.yaml'
   scope:
-    description: Ограничение, справедливое для этой роли
+    description: Область действия этой роли
     type: object
     required:
       - id
@@ -15,7 +15,7 @@ properties:
       id:
         $ref: './ResourceScopeId.yaml'
       resourceId:
-        description: Идентификатор доступного в рамках ограничения ресурса
+        description: Идентификатор доступного в рамках области ресурса
         type: string
         minLength: 1
         maxLength: 40
