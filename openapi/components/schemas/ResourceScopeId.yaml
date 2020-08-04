@@ -1,7 +1,4 @@
 description: Идентификатор ограничения для роли
-anyOf:
-  - enum:
-    - Shop
-  - type: string
-    minLength: 1
-    maxLength: 40
+type: string
+enum:
+  - Shop
