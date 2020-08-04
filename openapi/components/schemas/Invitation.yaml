@@ -22,8 +22,3 @@ properties:
     allOf:
       - $ref: './InvitationAcceptToken.yaml'
       - readOnly: true
-  metadata:
-    description: |
-      Произвольный, специфичный для клиента API и непрозрачный для системы набор
-      данных, ассоциированных с данным приглашением
-    type: object
