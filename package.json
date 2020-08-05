@@ -1,5 +1,5 @@
 {
-  "name": "rbkmoney-organisations-api",
+  "name": "rbkmoney-organizations-api",
   "version": "1.0.0",
   "dependencies": {
     "@redocly/openapi-cli": "^0.12.7",

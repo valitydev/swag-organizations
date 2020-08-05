@@ -4,6 +4,6 @@ required:
   - member
 properties:
   org:
-    $ref: './Organisation.yaml'
+    $ref: './Organization.yaml'
   member:
     $ref: './Member.yaml'

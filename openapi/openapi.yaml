@@ -1,7 +1,7 @@
 openapi: 3.0.3
 info:
   version: 1.0.0
-  title: RBKmoney Organisations API
+  title: RBKmoney Organizations API
   description:
     $ref: './docs/api.md'
   termsOfService: 'https://rbk.money/'

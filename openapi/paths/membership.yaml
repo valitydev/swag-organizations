@@ -18,7 +18,7 @@ get:
               results:
                 type: array
                 items:
-                  $ref: '../components/schemas/Organisation.yaml'
+                  $ref: '../components/schemas/Organization.yaml'
     '400':
       $ref: '../components/responses/BadRequest.yaml'
 
@@ -33,14 +33,14 @@ post:
     content:
       application/json:
         schema:
-          $ref: '../components/schemas/OrganisationJoinRequest.yaml'
+          $ref: '../components/schemas/OrganizationJoinRequest.yaml'
   responses:
     '201':
       description: Пользователь вступил в организацию
       content:
         application/json:
           schema:
-            $ref: '../components/schemas/OrganisationMembership.yaml'
+            $ref: '../components/schemas/OrganizationMembership.yaml'
       headers:
         location:
           description: URL членства в организации

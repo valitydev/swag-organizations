@@ -7,7 +7,7 @@ required:
   - owner
 properties:
   id:
-    $ref: './OrganisationId.yaml'
+    $ref: './OrganizationId.yaml'
   createdAt:
     description: Дата и время создания организации
     type: string

@@ -12,7 +12,7 @@ get:
       content:
         application/json:
           schema:
-            $ref: '../components/schemas/Organisation.yaml'
+            $ref: '../components/schemas/Organization.yaml'
     '404':
       description: Организация не найдена
     '400':
