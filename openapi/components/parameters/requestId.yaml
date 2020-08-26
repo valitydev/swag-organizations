@@ -5,5 +5,5 @@ required: true
 schema:
   type: string
   minLength: 4
-  maxLength: 32
+  maxLength: 64
   example: RQID-Z08G3EFE5DZ429VVO755BM19D51
