@@ -1,5 +1,0 @@
-description: Имя пользователя
-type: string
-minLength: 4
-maxLength: 100
-example: 'Laura Palmer'

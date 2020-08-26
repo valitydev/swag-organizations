@@ -15,9 +15,7 @@ properties:
         enum:
           - EMail
       email:
-        description: Адрес электронной почты
-        type: string
-        format: email
+        $ref: './UserEmail.yaml'
   roles:
     allOf:
       - description: |

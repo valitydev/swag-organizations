@@ -2,20 +2,5 @@ type: object
 required:
   - invitation
 properties:
-  # TODO
-  # Предполагается, что у меня как у пользователя могут быть _разные_ имена и
-  # тэги в разных организациях. Это норм или перебор?
-  userName:
-    allOf:
-      - description: |
-          Имя пользователя в этой организации.
-          По умолчанию будет использовано имя, указанное при регистрации.
-      - $ref: './UserName.yaml'
-  userTag:
-    allOf:
-      - description: |
-          Короткий запоминающийся тэг пользователя в этой организации.
-          По умолчанию будет использован фрагмент email-адреса до символа `@`.
-      - $ref: './UserTag.yaml'
   invitation:
     $ref: './InvitationAcceptToken.yaml'

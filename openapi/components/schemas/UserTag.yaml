@@ -1,4 +1,0 @@
-description: Короткий, легко запоминающийся и воспроизводимый тэг пользователя
-type: string
-pattern: '[A-Za-z0-9\-.]{4,20}'
-example: firewalker
