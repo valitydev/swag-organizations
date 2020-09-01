@@ -1,0 +1,14 @@
+type: object
+required:
+  - status
+discriminator:
+  propertyName: status
+  mapping:
+    'Pending': './InvitationPending.yaml'
+    'Accepted': './InvitationAccepted.yaml'
+    'Expired': './InvitationExpired.yaml'
+    'Revoked': './InvitationRevoked.yaml'
+properties:
+  status:
+    description: Статус приглашения
+    readOnly: true

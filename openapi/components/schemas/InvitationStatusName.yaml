@@ -1,0 +1,7 @@
+type: string
+enum:
+  - 'Pending'
+  - 'Accepted'
+  - 'Expired'
+  - 'Revoked'
+default: 'Pending'

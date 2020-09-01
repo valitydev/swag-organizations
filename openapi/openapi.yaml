@@ -19,6 +19,8 @@ tags:
     x-displayName: Организации
   - name: members
     x-displayName: Сотрудники
+  - name: invitations
+    x-displayName: Приглашения
   - name: roles
     x-displayName: Роли
   - name: error-codes
@@ -44,6 +46,8 @@ paths:
     $ref: ./paths/memberRoles.yaml
   /orgs/{orgId}/invitations:
     $ref: ./paths/invitations.yaml
+  /orgs/{orgId}/invitations/{invitationId}:
+    $ref: ./paths/invitation.yaml
 servers:
   - url: 'https://api.rbk.money/org/v1'
 components:
