@@ -63,5 +63,7 @@ post:
               message:
                 description: Человекочитаемое описание ошибки
                 type: string
+    '403':
+      description: Вступление невозможно
     '400':
       $ref: '../components/responses/BadRequest.yaml'
