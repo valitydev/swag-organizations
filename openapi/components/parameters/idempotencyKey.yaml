@@ -1,0 +1,10 @@
+name: X-Idempotency-Key
+in: header
+description: |
+  Уникальный ключ для обеспечения единоразовой (идемпотентной) обработки операции.
+required: false
+schema:
+  type: string
+  minLength: 4
+  maxLength: 64
+  example: 881D:08BA

@@ -40,6 +40,7 @@ post:
     - invitations
   parameters:
     - $ref: '../components/parameters/requestId.yaml'
+    - $ref: '../components/parameters/idempotencyKey.yaml'
     - $ref: '../components/parameters/orgId.yaml'
   requestBody:
     description: Данные нового приглашения
