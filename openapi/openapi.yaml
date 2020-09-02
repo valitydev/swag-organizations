@@ -32,6 +32,8 @@ paths:
     $ref: ./paths/membership.yaml
   /user/membership/{orgId}:
     $ref: ./paths/orgMembership.yaml
+  /orgs:
+    $ref: ./paths/orgs.yaml
   /orgs/{orgId}:
     $ref: ./paths/org.yaml
   /orgs/{orgId}/roles:
