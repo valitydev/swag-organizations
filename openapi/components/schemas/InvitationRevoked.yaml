@@ -3,7 +3,7 @@ allOf:
   - type: object
     properties:
       revokedAt:
-        description: Дата и время принятия приглашения
+        description: Дата и время отзыва приглашения
         type: string
         format: date-time
       reason:
