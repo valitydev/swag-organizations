@@ -1,4 +1,5 @@
 description: Приглашение для сотрудника
+type: object
 allOf:
   - type: object
     required:
