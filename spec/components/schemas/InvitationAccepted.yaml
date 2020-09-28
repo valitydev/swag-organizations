@@ -1,5 +1,5 @@
 allOf:
-  - $ref: '#/schemas/Invitation.yaml'
+  - $ref: '#/components/schemas/Invitation.yaml'
   - type: object
     properties:
       acceptedAt:
@@ -13,4 +13,4 @@ allOf:
           - id
         properties:
           id:
-            $ref: '#/parameters/userId.yaml'
+            $ref: '#/components/parameters/userId.yaml'

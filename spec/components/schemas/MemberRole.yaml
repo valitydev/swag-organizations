@@ -4,7 +4,7 @@ required:
   - roleId
 properties:
   roleId:
-    $ref: '#/parameters/roleId.yaml'
+    $ref: '#/components/parameters/roleId.yaml'
   scope:
     description: Область действия этой роли
     type: object
@@ -13,7 +13,7 @@ properties:
       - resourceId
     properties:
       id:
-        $ref: '#/schemas/ResourceScopeId.yaml'
+        $ref: '#/components/schemas/ResourceScopeId.yaml'
       resourceId:
         description: Идентификатор доступного в рамках области ресурса
         type: string

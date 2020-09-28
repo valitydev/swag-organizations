@@ -6,8 +6,8 @@ required:
   - roles
 properties:
   id:
-    $ref: '#/parameters/userId.yaml'
+    $ref: '#/components/parameters/userId.yaml'
   userEmail:
-    $ref: '#/schemas/UserEmail.yaml'
+    $ref: '#/components/schemas/UserEmail.yaml'
   roles:
-    $ref: '#/schemas/MemberRoleSet.yaml'
+    $ref: '#/components/schemas/MemberRoleSet.yaml'

@@ -1,5 +1,5 @@
 description: Приглашение для сотрудника
-x-rebillyMerge:
+allOf:
   - type: object
     required:
       - id
@@ -7,7 +7,7 @@ x-rebillyMerge:
       - expiresAt
     properties:
       id:
-        $ref: '#/parameters/invitationId.yaml'
+        $ref: '#/components/parameters/invitationId.yaml'
       createdAt:
         description: Дата и время создания
         type: string
@@ -18,10 +18,10 @@ x-rebillyMerge:
         type: string
         format: date-time
       invitee:
-        $ref: '#/schemas/Invitee.yaml'
+        $ref: '#/components/schemas/Invitee.yaml'
       acceptToken:
-        x-rebillyMerge:
-          - $ref: '#/schemas/InvitationAcceptToken.yaml'
+        allOf:
+          - $ref: '#/components/schemas/InvitationAcceptToken.yaml'
           - readOnly: true
       metadata:
         description: |
@@ -30,4 +30,4 @@ x-rebillyMerge:
         type: object
         example:
           mailTemplate: 'v2.beta'
-  - $ref: '#/schemas/InvitationStatus.yaml'
+  - $ref: '#/components/schemas/InvitationStatus.yaml'

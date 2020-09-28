@@ -7,7 +7,7 @@ required:
   - owner
 properties:
   id:
-    $ref: '#/schemas/OrganizationId.yaml'
+    $ref: '#/components/schemas/OrganizationId.yaml'
   createdAt:
     description: Дата и время создания организации
     type: string
@@ -22,7 +22,7 @@ properties:
   owner:
     allOf:
       - description: Идентификатор пользователя-владельца организации
-      - $ref: '#/parameters/userId.yaml'
+      - $ref: '#/components/parameters/userId.yaml'
   metadata:
     description: |
       Произвольный, специфичный для клиента API и непрозрачный для системы набор данных, ассоциированных с

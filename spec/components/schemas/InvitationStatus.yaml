@@ -4,10 +4,10 @@ required:
 discriminator:
   propertyName: status
   mapping:
-    'Pending': '#/schemas/InvitationPending.yaml'
-    'Accepted': '#/schemas/InvitationAccepted.yaml'
-    'Expired': '#/schemas/InvitationExpired.yaml'
-    'Revoked': '#/schemas/InvitationRevoked.yaml'
+    'Pending': '#/components/schemas/InvitationPending.yaml'
+    'Accepted': '#/components/schemas/InvitationAccepted.yaml'
+    'Expired': '#/components/schemas/InvitationExpired.yaml'
+    'Revoked': '#/components/schemas/InvitationRevoked.yaml'
 properties:
   status:
     description: Статус приглашения

@@ -5,7 +5,7 @@ required:
   - name
 properties:
   id:
-    $ref: '#/parameters/roleId.yaml'
+    $ref: '#/components/parameters/roleId.yaml'
   name:
     description: Название роли в человекочитаемом виде
     type: string
@@ -17,4 +17,4 @@ properties:
     type: array
     uniqueItems: true
     items:
-      $ref: '#/schemas/ResourceScopeId.yaml'
+      $ref: '#/components/schemas/ResourceScopeId.yaml'
