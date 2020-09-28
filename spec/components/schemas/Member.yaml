@@ -6,7 +6,7 @@ required:
   - roles
 properties:
   id:
-    $ref: '#/components/parameters/userId'
+    $ref: '#/components/schemas/UserId'
   userEmail:
     $ref: '#/components/schemas/UserEmail'
   roles:

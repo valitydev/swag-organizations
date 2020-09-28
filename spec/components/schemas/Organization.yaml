@@ -22,7 +22,7 @@ properties:
   owner:
     allOf:
       - description: Идентификатор пользователя-владельца организации
-      - $ref: '#/components/parameters/userId'
+      - $ref: '#/components/schemas/UserId'
   metadata:
     description: |
       Произвольный, специфичный для клиента API и непрозрачный для системы набор данных, ассоциированных с

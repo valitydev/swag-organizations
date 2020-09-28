@@ -4,7 +4,7 @@ required:
   - roleId
 properties:
   roleId:
-    $ref: '#/components/parameters/roleId'
+    $ref: '#/components/schemas/RoleId'
   scope:
     description: Область действия этой роли
     type: object

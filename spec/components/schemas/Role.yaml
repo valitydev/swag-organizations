@@ -5,7 +5,7 @@ required:
   - name
 properties:
   id:
-    $ref: '#/components/parameters/roleId'
+    $ref: '#/components/schemas/RoleId'
   name:
     description: Название роли в человекочитаемом виде
     type: string

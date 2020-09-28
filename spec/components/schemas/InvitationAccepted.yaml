@@ -13,4 +13,4 @@ allOf:
           - id
         properties:
           id:
-            $ref: '#/components/parameters/userId'
+            $ref: '#/components/schemas/UserId'
