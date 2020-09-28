@@ -1,33 +1,33 @@
-description: Приглашение для сотрудника
-allOf:
-  - type: object
-    required:
-      - id
-      - createdAt
-      - expiresAt
-    properties:
-      id:
-        $ref: '#/parameters/invitationId.yaml'
-      createdAt:
-        description: Дата и время создания
-        type: string
-        format: date-time
-        readOnly: true
-      expiresAt:
-        description: Дата и время истечения срока принятия
-        type: string
-        format: date-time
-      invitee:
-        $ref: '#/schemas/Invitee.yaml'
-      acceptToken:
-        allOf:
-          - $ref: '#/schemas/InvitationAcceptToken.yaml'
-          - readOnly: true
-      metadata:
-        description: |
-          Произвольный, специфичный для клиента API и непрозрачный для системы набор данных, ассоциированных с
-          данным приглашением
-        type: object
-        example:
-          mailTemplate: 'v2.beta'
-  - $ref: '#/schemas/InvitationStatus.yaml'
+#description: Приглашение для сотрудника
+#allOf:
+#  - type: object
+#    required:
+#      - id
+#      - createdAt
+#      - expiresAt
+#    properties:
+#      id:
+#        $ref: '#/parameters/invitationId.yaml'
+#      createdAt:
+#        description: Дата и время создания
+#        type: string
+#        format: date-time
+#        readOnly: true
+#      expiresAt:
+#        description: Дата и время истечения срока принятия
+#        type: string
+#        format: date-time
+#      invitee:
+#        $ref: '#/schemas/Invitee.yaml'
+#      acceptToken:
+#        allOf:
+#          - $ref: '#/schemas/InvitationAcceptToken.yaml'
+#          - readOnly: true
+#      metadata:
+#        description: |
+#          Произвольный, специфичный для клиента API и непрозрачный для системы набор данных, ассоциированных с
+#          данным приглашением
+#        type: object
+#        example:
+#          mailTemplate: 'v2.beta'
+#  - $ref: '#/schemas/InvitationStatus.yaml'
