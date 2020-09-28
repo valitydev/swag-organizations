@@ -1,0 +1,71 @@
+get:
+  summary: Получить данные приглашения
+  operationId: getInvitation
+  tags:
+    - invitations
+  parameters:
+    - $ref: '../components/parameters/requestId.yaml'
+    - $ref: '../components/parameters/orgId.yaml'
+    - $ref: '../components/parameters/invitationId.yaml'
+  responses:
+    '200':
+      description: Приглашение найдено
+      content:
+        application/json:
+          schema:
+            $ref: '../components/schemas/Invitation.yaml'
+    '404':
+      description: Приглашение не найдено
+    '403':
+      description: Данные недоступны
+    '400':
+      $ref: '../components/responses/BadRequest.yaml'
+
+patch:
+  summary: Отозвать приглашение
+  operationId: revokeInvitation
+  tags:
+    - invitations
+  parameters:
+    - $ref: '../components/parameters/requestId.yaml'
+    - $ref: '../components/parameters/orgId.yaml'
+    - $ref: '../components/parameters/invitationId.yaml'
+  requestBody:
+    content:
+      application/json:
+        schema:
+          type: object
+          required:
+            - status
+          properties:
+            status:
+              type: string
+              enum:
+                - Revoked
+            reason:
+              description: Причина отзыва приглашения
+              type: string
+              maxLength: 1000
+  responses:
+    '204':
+      description: Приглашение отозвано
+    '422':
+      description: Отзыв невозможен
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              code:
+                type: string
+                enum:
+                  - invalidStatus
+              message:
+                description: Человекочитаемое описание ошибки
+                type: string
+    '404':
+      description: Приглашение не найдено
+    '403':
+      description: Операция недоступна
+    '400':
+      $ref: '../components/responses/BadRequest.yaml'

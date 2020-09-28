@@ -1,0 +1,78 @@
+get:
+  summary: Перечислить приглашения
+  operationId: listInvitations
+  tags:
+    - invitations
+  parameters:
+    - $ref: '../components/parameters/requestId.yaml'
+    - $ref: '../components/parameters/orgId.yaml'
+    - description: Фильтр по статусу приглашения
+      name: status
+      in: query
+      required: false
+      schema:
+        $ref: '../components/schemas/InvitationStatusName.yaml'
+  responses:
+    '200':
+      description: Найдены приглашения
+      content:
+        application/json:
+          schema:
+            type: object
+            required:
+              - results
+            properties:
+              results:
+                type: array
+                items:
+                  $ref: '../components/schemas/Invitation.yaml'
+    '403':
+      description: Операция недоступна
+    '404':
+      description: Организация не найдена
+    '400':
+      $ref: '../components/responses/BadRequest.yaml'
+
+post:
+  summary: Сформировать приглашение
+  operationId: createInvitation
+  tags:
+    - invitations
+  parameters:
+    - $ref: '../components/parameters/requestId.yaml'
+    - $ref: '../components/parameters/idempotencyKey.yaml'
+    - $ref: '../components/parameters/orgId.yaml'
+  requestBody:
+    description: Данные нового приглашения
+    required: true
+    content:
+        application/json:
+          schema:
+            $ref: '../components/schemas/Invitation.yaml'
+  responses:
+    '201':
+      description: Приглашение сформировано
+      content:
+        application/json:
+          schema:
+            $ref: '../components/schemas/Invitation.yaml'
+    '422':
+      description: Невозможно совершить операцию
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              code:
+                type: string
+                enum:
+                  - invalidRole
+              message:
+                description: Человекочитаемое описание ошибки
+                type: string
+    '403':
+      description: Операция недоступна
+    '404':
+      description: Организация не найдена
+    '400':
+      $ref: '../components/responses/BadRequest.yaml'

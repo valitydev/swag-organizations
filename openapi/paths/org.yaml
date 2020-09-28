@@ -1,0 +1,19 @@
+get:
+  summary: Получить данные организации
+  operationId: getOrg
+  tags:
+    - orgs
+  parameters:
+    - $ref: '../components/parameters/requestId.yaml'
+    - $ref: '../components/parameters/orgId.yaml'
+  responses:
+    '200':
+      description: Организация найдена
+      content:
+        application/json:
+          schema:
+            $ref: '../components/schemas/Organization.yaml'
+    '404':
+      description: Организация не найдена
+    '400':
+      $ref: '../components/responses/BadRequest.yaml'

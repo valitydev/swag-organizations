@@ -1,0 +1,7 @@
+description: Идентификатор роли
+type: string
+enum:
+  - Administrator
+  - Accountant
+  - Integrator
+  - Manager

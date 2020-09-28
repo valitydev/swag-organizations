@@ -1,0 +1,20 @@
+description: Роль в организации
+type: object
+required:
+  - id
+  - name
+properties:
+  id:
+    $ref: './RoleId.yaml'
+  name:
+    description: Название роли в человекочитаемом виде
+    type: string
+    minLength: 4
+    maxLength: 100
+    example: 'Shop Manager'
+  scopes:
+    description: Возможные области действия для роли
+    type: array
+    uniqueItems: true
+    items:
+      $ref: './ResourceScopeId.yaml'

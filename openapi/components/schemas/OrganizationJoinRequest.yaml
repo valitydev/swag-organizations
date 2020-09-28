@@ -1,0 +1,6 @@
+type: object
+required:
+  - invitation
+properties:
+  invitation:
+    $ref: './InvitationAcceptToken.yaml'

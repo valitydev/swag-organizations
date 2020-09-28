@@ -1,0 +1,28 @@
+get:
+  summary: Перечислить доступные роли в организации
+  operationId: listOrgRoles
+  tags:
+    - roles
+  parameters:
+    - $ref: '../components/parameters/requestId.yaml'
+    - $ref: '../components/parameters/orgId.yaml'
+  responses:
+    '200':
+      description: Найдены роли
+      content:
+        application/json:
+          schema:
+            type: object
+            required:
+              - results
+            properties:
+              results:
+                type: array
+                items:
+                  $ref: '../components/schemas/Role.yaml'
+    '403':
+      description: Данные недоступны
+    '404':
+      description: Организация не найдена
+    '400':
+      $ref: '../components/responses/BadRequest.yaml'

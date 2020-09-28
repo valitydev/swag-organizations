@@ -1,0 +1,79 @@
+put:
+  summary: Назначить сотруднику роль
+  operationId: assignMemberRole
+  tags:
+    - members
+  parameters:
+    - $ref: '../components/parameters/requestId.yaml'
+    - $ref: '../components/parameters/orgId.yaml'
+    - $ref: '../components/parameters/userId.yaml'
+  requestBody:
+    content:
+      application/json:
+        schema:
+          $ref: '../components/schemas/MemberRole.yaml'
+  responses:
+    # TODO
+    # Нужно ли возвращать получившийся набор ролей?
+    '204':
+      description: Роль назначена
+    '422':
+      # TODO
+      # Может упростить пока и не энфорсить это требование на API?
+      description: Невозможно совершить операцию
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              code:
+                type: string
+                enum:
+                  - onlyRoleLeft
+              message:
+                description: Человекочитаемое описание ошибки
+                type: string
+    '403':
+      description: Операция недоступна
+    '404':
+      description: Сотрудник не найден
+    '400':
+      $ref: '../components/responses/BadRequest.yaml'
+
+delete:
+  summary: Снять роль с сотрудника
+  operationId: removeMemberRole
+  tags:
+    - members
+  parameters:
+    - $ref: '../components/parameters/requestId.yaml'
+    - $ref: '../components/parameters/orgId.yaml'
+    - $ref: '../components/parameters/userId.yaml'
+  requestBody:
+    content:
+      application/json:
+        schema:
+          $ref: '../components/schemas/MemberRole.yaml'
+  responses:
+    '204':
+      description: Сотрудник более не обладает указанной ролью
+    '422':
+      description: Невозможно совершить операцию
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              code:
+                type: string
+                enum:
+                  - invalidRole
+              message:
+                description: Человекочитаемое описание ошибки
+                type: string
+    '403':
+      description: Операция недоступна
+    '404':
+      description: Сотрудник не найден
+    '400':
+      $ref: '../components/responses/BadRequest.yaml'

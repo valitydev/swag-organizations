@@ -1,0 +1,7 @@
+type: string
+minLength: 1
+maxLength: 4000
+description:
+  Токен для принятия приглашения пользователем
+example: |
+  eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJsYXVyYS5wYWxtZXJAbmlpZGFyLnN1IiwiaWF0IjoxNTE2MjM5MDIyLCJvcmciOiJvcl9hZjllNzZ1YzViNDdoOGIxNTQuMTliOHhhNjFkYzk0Iiwicm9sZXMiOltdfQ.p0kQj5AuogXuBwBvAFWdk8beI5JThXksRH7kFUjvRMk

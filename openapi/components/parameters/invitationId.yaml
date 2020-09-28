@@ -1,0 +1,6 @@
+name: invitationId
+in: path
+description: Идентификатор приглашения
+required: true
+schema:
+  $ref: '../schemas/InvitationId.yaml'

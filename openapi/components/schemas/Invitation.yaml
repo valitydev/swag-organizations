@@ -1,0 +1,33 @@
+description: Приглашение для сотрудника
+allOf:
+  - type: object
+    required:
+      - id
+      - createdAt
+      - expiresAt
+    properties:
+      id:
+        $ref: './InvitationId.yaml'
+      createdAt:
+        description: Дата и время создания
+        type: string
+        format: date-time
+        readOnly: true
+      expiresAt:
+        description: Дата и время истечения срока принятия
+        type: string
+        format: date-time
+      invitee:
+        $ref: './Invitee.yaml'
+      acceptToken:
+        allOf:
+          - $ref: './InvitationAcceptToken.yaml'
+          - readOnly: true
+      metadata:
+        description: |
+          Произвольный, специфичный для клиента API и непрозрачный для системы набор данных, ассоциированных с
+          данным приглашением
+        type: object
+        example:
+          mailTemplate: 'v2.beta'
+  - $ref: './InvitationStatus.yaml'

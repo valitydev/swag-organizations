@@ -1,0 +1,41 @@
+get:
+  summary: Получить данные сотрудника
+  operationId: getOrgMember
+  tags:
+    - members
+  parameters:
+    - $ref: '../components/parameters/requestId.yaml'
+    - $ref: '../components/parameters/orgId.yaml'
+    - $ref: '../components/parameters/userId.yaml'
+  responses:
+    '200':
+      description: Данные найдены
+      content:
+        application/json:
+          schema:
+            $ref: '../components/schemas/Member.yaml'
+    '403':
+      description: Данные недоступны
+    '404':
+      description: Сотрудник не найден
+    '400':
+      $ref: '../components/responses/BadRequest.yaml'
+
+delete:
+  summary: Исключить сотрудника из организации
+  operationId: expelOrgMember
+  tags:
+    - members
+  parameters:
+    - $ref: '../components/parameters/requestId.yaml'
+    - $ref: '../components/parameters/orgId.yaml'
+    - $ref: '../components/parameters/userId.yaml'
+  responses:
+    '204':
+      description: Сотрудник более не состоит в организации
+    '403':
+      description: Операция недоступна
+    '404':
+      description: Организация не найдена
+    '400':
+      $ref: '../components/responses/BadRequest.yaml'

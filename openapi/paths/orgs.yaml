@@ -1,0 +1,24 @@
+post:
+  summary: Создать новую организацию
+  operationId: createOrg
+  tags:
+    - orgs
+  parameters:
+    - $ref: '../components/parameters/requestId.yaml'
+    - $ref: '../components/parameters/idempotencyKey.yaml'
+  requestBody:
+    description: Данные организации
+    required: true
+    content:
+        application/json:
+          schema:
+            $ref: '../components/schemas/Organization.yaml'
+  responses:
+    '201':
+      description: Организация создана
+      content:
+        application/json:
+          schema:
+            $ref: '../components/schemas/Organization.yaml'
+    '400':
+      $ref: '../components/responses/BadRequest.yaml'

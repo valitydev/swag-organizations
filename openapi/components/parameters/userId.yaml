@@ -1,0 +1,6 @@
+name: userId
+in: path
+description: Идентификатор пользователя
+required: true
+schema:
+  $ref: '../schemas/UserId.yaml'

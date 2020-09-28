@@ -1,0 +1,22 @@
+description: Роль сотрудника в организации
+type: object
+required:
+  - roleId
+properties:
+  roleId:
+    $ref: './RoleId.yaml'
+  scope:
+    description: Область действия этой роли
+    type: object
+    required:
+      - id
+      - resourceId
+    properties:
+      id:
+        $ref: './ResourceScopeId.yaml'
+      resourceId:
+        description: Идентификатор доступного в рамках области ресурса
+        type: string
+        minLength: 1
+        maxLength: 40
+        example: sh_27839dt482v28ab7escze113y858dp

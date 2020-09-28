@@ -1,0 +1,32 @@
+description: Модель организации
+type: object
+required:
+  - id
+  - createdAt
+  - name
+  - owner
+properties:
+  id:
+    $ref: './OrganizationId.yaml'
+  createdAt:
+    description: Дата и время создания организации
+    type: string
+    format: date-time
+    readOnly: true
+  name:
+    description: Название организации в человекочитаемом виде
+    type: string
+    minLength: 4
+    maxLength: 100
+    example: 'stolovka3'
+  owner:
+    allOf:
+      - description: Идентификатор пользователя-владельца организации
+      - $ref: './UserId.yaml'
+  metadata:
+    description: |
+      Произвольный, специфичный для клиента API и непрозрачный для системы набор данных, ассоциированных с
+      данной организацией
+    type: object
+    example:
+      displayName: 'НИИДАР Столовая №3'

@@ -1,0 +1,13 @@
+description: Сотрудник организации
+type: object
+required:
+  - id
+  - userEmail
+  - roles
+properties:
+  id:
+    $ref: './UserId.yaml'
+  userEmail:
+    $ref: './UserEmail.yaml'
+  roles:
+    $ref: './MemberRoleSet.yaml'

@@ -1,0 +1,69 @@
+get:
+  summary: Перечислить доступные организации
+  operationId: listOrgMembership
+  tags:
+    - orgs
+  parameters:
+    - $ref: '../components/parameters/requestId.yaml'
+  responses:
+    '200':
+      description: Найдены доступные организации
+      content:
+        application/json:
+          schema:
+            type: object
+            required:
+              - results
+            properties:
+              results:
+                type: array
+                items:
+                  $ref: '../components/schemas/Organization.yaml'
+    '400':
+      $ref: '../components/responses/BadRequest.yaml'
+
+post:
+  summary: Вступить в организацию по приглашению
+  operationId: joinOrg
+  tags:
+    - orgs
+  parameters:
+    - $ref: '../components/parameters/requestId.yaml'
+  requestBody:
+    content:
+      application/json:
+        schema:
+          $ref: '../components/schemas/OrganizationJoinRequest.yaml'
+  responses:
+    '201':
+      description: Пользователь вступил в организацию
+      content:
+        application/json:
+          schema:
+            $ref: '../components/schemas/OrganizationMembership.yaml'
+      headers:
+        location:
+          description: URL членства в организации
+          required: true
+          schema:
+            type: string
+            format: uri
+            example: 'https://api.rbk.money/org/v1/user/membership/or_af9e76uc5b47h8b154.19b8xa61dc94'
+    '422':
+      description: Невозможно совершить операцию
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              code:
+                type: string
+                enum:
+                  - invitationExpired
+              message:
+                description: Человекочитаемое описание ошибки
+                type: string
+    '403':
+      description: Вступление невозможно
+    '400':
+      $ref: '../components/responses/BadRequest.yaml'
