@@ -8,7 +8,7 @@ allOf:
       - expiresAt
     properties:
       id:
-        $ref: '#/components/parameters/invitationId'
+        $ref: '#/components/schemas/InvitationId'
       createdAt:
         description: Дата и время создания
         type: string
