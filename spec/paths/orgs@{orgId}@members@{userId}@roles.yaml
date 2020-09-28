@@ -4,14 +4,14 @@ put:
   tags:
     - members
   parameters:
-    - $ref: '../components/parameters/requestId.yaml'
-    - $ref: '../components/parameters/orgId.yaml'
-    - $ref: '../components/parameters/userId.yaml'
+    - $ref: '#/components/parameters/requestId.yaml'
+    - $ref: '#/components/parameters/orgId.yaml'
+    - $ref: '#/components/parameters/userId.yaml'
   requestBody:
     content:
       application/json:
         schema:
-          $ref: '../components/schemas/MemberRole.yaml'
+          $ref: '#/components/schemas/MemberRole.yaml'
   responses:
     # TODO
     # Нужно ли возвращать получившийся набор ролей?
@@ -38,7 +38,7 @@ put:
     '404':
       description: Сотрудник не найден
     '400':
-      $ref: '../components/responses/BadRequest.yaml'
+      $ref: '#/components/responses/BadRequest.yaml'
 
 delete:
   summary: Снять роль с сотрудника
@@ -46,14 +46,14 @@ delete:
   tags:
     - members
   parameters:
-    - $ref: '../components/parameters/requestId.yaml'
-    - $ref: '../components/parameters/orgId.yaml'
-    - $ref: '../components/parameters/userId.yaml'
+    - $ref: '#/components/parameters/requestId.yaml'
+    - $ref: '#/components/parameters/orgId.yaml'
+    - $ref: '#/components/parameters/userId.yaml'
   requestBody:
     content:
       application/json:
         schema:
-          $ref: '../components/schemas/MemberRole.yaml'
+          $ref: '#/components/schemas/MemberRole.yaml'
   responses:
     '204':
       description: Сотрудник более не обладает указанной ролью
@@ -76,4 +76,4 @@ delete:
     '404':
       description: Сотрудник не найден
     '400':
-      $ref: '../components/responses/BadRequest.yaml'
+      $ref: '#/components/responses/BadRequest.yaml'

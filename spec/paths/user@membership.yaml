@@ -4,7 +4,7 @@ get:
   tags:
     - orgs
   parameters:
-    - $ref: '../components/parameters/requestId.yaml'
+    - $ref: '#/components/parameters/requestId.yaml'
   responses:
     '200':
       description: Найдены доступные организации
@@ -18,9 +18,9 @@ get:
               results:
                 type: array
                 items:
-                  $ref: '../components/schemas/Organization.yaml'
+                  $ref: '#/components/schemas/Organization.yaml'
     '400':
-      $ref: '../components/responses/BadRequest.yaml'
+      $ref: '#/components/responses/BadRequest.yaml'
 
 post:
   summary: Вступить в организацию по приглашению
@@ -28,19 +28,19 @@ post:
   tags:
     - orgs
   parameters:
-    - $ref: '../components/parameters/requestId.yaml'
+    - $ref: '#/components/parameters/requestId.yaml'
   requestBody:
     content:
       application/json:
         schema:
-          $ref: '../components/schemas/OrganizationJoinRequest.yaml'
+          $ref: '#/components/schemas/OrganizationJoinRequest.yaml'
   responses:
     '201':
       description: Пользователь вступил в организацию
       content:
         application/json:
           schema:
-            $ref: '../components/schemas/OrganizationMembership.yaml'
+            $ref: '#/components/schemas/OrganizationMembership.yaml'
       headers:
         location:
           description: URL членства в организации
@@ -66,4 +66,4 @@ post:
     '403':
       description: Вступление невозможно
     '400':
-      $ref: '../components/responses/BadRequest.yaml'
+      $ref: '#/components/responses/BadRequest.yaml'
