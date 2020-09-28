@@ -1,2 +1,2 @@
 allOf:
-  - $ref: '#/components/schemas/Invitation.yaml'
+  - $ref: '#/components/schemas/Invitation'

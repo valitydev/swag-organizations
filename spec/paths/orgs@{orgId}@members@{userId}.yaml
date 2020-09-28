@@ -4,22 +4,22 @@ get:
   tags:
     - members
   parameters:
-    - $ref: '#/components/parameters/requestId.yaml'
-    - $ref: '#/components/parameters/orgId.yaml'
-    - $ref: '#/components/parameters/userId.yaml'
+    - $ref: '#/components/parameters/requestId'
+    - $ref: '#/components/parameters/orgId'
+    - $ref: '#/components/parameters/userId'
   responses:
     '200':
       description: Данные найдены
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/Member.yaml'
+            $ref: '#/components/schemas/Member'
     '403':
       description: Данные недоступны
     '404':
       description: Сотрудник не найден
     '400':
-      $ref: '#/components/responses/BadRequest.yaml'
+      $ref: '#/components/responses/BadRequest'
 
 delete:
   summary: Исключить сотрудника из организации
@@ -27,9 +27,9 @@ delete:
   tags:
     - members
   parameters:
-    - $ref: '#/components/parameters/requestId.yaml'
-    - $ref: '#/components/parameters/orgId.yaml'
-    - $ref: '#/components/parameters/userId.yaml'
+    - $ref: '#/components/parameters/requestId'
+    - $ref: '#/components/parameters/orgId'
+    - $ref: '#/components/parameters/userId'
   responses:
     '204':
       description: Сотрудник более не состоит в организации
@@ -38,4 +38,4 @@ delete:
     '404':
       description: Организация не найдена
     '400':
-      $ref: '#/components/responses/BadRequest.yaml'
+      $ref: '#/components/responses/BadRequest'

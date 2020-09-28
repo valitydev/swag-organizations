@@ -3,4 +3,4 @@ in: path
 description: Идентификатор организации
 required: true
 schema:
-  $ref: '#/components/schemas/OrganizationId.yaml'
+  $ref: '#/components/schemas/OrganizationId'

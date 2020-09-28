@@ -1,5 +1,5 @@
 allOf:
-  - $ref: '#/components/schemas/Invitation.yaml'
+  - $ref: '#/components/schemas/Invitation'
   - type: object
     properties:
       revokedAt:

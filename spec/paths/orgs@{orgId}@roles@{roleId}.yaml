@@ -4,19 +4,19 @@ get:
   tags:
     - roles
   parameters:
-    - $ref: '#/components/parameters/requestId.yaml'
-    - $ref: '#/components/parameters/orgId.yaml'
-    - $ref: '#/components/parameters/roleId.yaml'
+    - $ref: '#/components/parameters/requestId'
+    - $ref: '#/components/parameters/orgId'
+    - $ref: '#/components/parameters/roleId'
   responses:
     '200':
       description: Найдены роли
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/Role.yaml'
+            $ref: '#/components/schemas/Role'
     '403':
       description: Данные недоступны
     '404':
       description: Организация не найдена
     '400':
-      $ref: '#/components/responses/BadRequest.yaml'
+      $ref: '#/components/responses/BadRequest'

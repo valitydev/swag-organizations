@@ -4,14 +4,14 @@ get:
   tags:
     - invitations
   parameters:
-    - $ref: '#/components/parameters/requestId.yaml'
-    - $ref: '#/components/parameters/orgId.yaml'
+    - $ref: '#/components/parameters/requestId'
+    - $ref: '#/components/parameters/orgId'
     - description: Фильтр по статусу приглашения
       name: status
       in: query
       required: false
       schema:
-        $ref: '#/components/schemas/InvitationStatusName.yaml'
+        $ref: '#/components/schemas/InvitationStatusName'
   responses:
     '200':
       description: Найдены приглашения
@@ -25,13 +25,13 @@ get:
               results:
                 type: array
                 items:
-                  $ref: '#/components/schemas/Invitation.yaml'
+                  $ref: '#/components/schemas/Invitation'
     '403':
       description: Операция недоступна
     '404':
       description: Организация не найдена
     '400':
-      $ref: '#/components/responses/BadRequest.yaml'
+      $ref: '#/components/responses/BadRequest'
 
 post:
   summary: Сформировать приглашение
@@ -39,23 +39,23 @@ post:
   tags:
     - invitations
   parameters:
-    - $ref: '#/components/parameters/requestId.yaml'
-    - $ref: '#/components/parameters/idempotencyKey.yaml'
-    - $ref: '#/components/parameters/orgId.yaml'
+    - $ref: '#/components/parameters/requestId'
+    - $ref: '#/components/parameters/idempotencyKey'
+    - $ref: '#/components/parameters/orgId'
   requestBody:
     description: Данные нового приглашения
     required: true
     content:
         application/json:
           schema:
-            $ref: '#/components/schemas/Invitation.yaml'
+            $ref: '#/components/schemas/Invitation'
   responses:
     '201':
       description: Приглашение сформировано
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/Invitation.yaml'
+            $ref: '#/components/schemas/Invitation'
     '422':
       description: Невозможно совершить операцию
       content:
@@ -75,4 +75,4 @@ post:
     '404':
       description: Организация не найдена
     '400':
-      $ref: '#/components/responses/BadRequest.yaml'
+      $ref: '#/components/responses/BadRequest'

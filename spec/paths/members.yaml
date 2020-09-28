@@ -4,8 +4,8 @@ get:
   tags:
     - members
   parameters:
-    - $ref: '#/components/parameters/requestId.yaml'
-    - $ref: '#/components/parameters/orgId.yaml'
+    - $ref: '#/components/parameters/requestId'
+    - $ref: '#/components/parameters/orgId'
   responses:
     '200':
       description: Найдены сотрудники
@@ -19,10 +19,10 @@ get:
               results:
                 type: array
                 items:
-                  $ref: '#/components/schemas/Member.yaml'
+                  $ref: '#/components/schemas/Member'
     '403':
       description: Данные недоступны
     '404':
       description: Организация не найдена
     '400':
-      $ref: '#/components/responses/BadRequest.yaml'
+      $ref: '#/components/responses/BadRequest'

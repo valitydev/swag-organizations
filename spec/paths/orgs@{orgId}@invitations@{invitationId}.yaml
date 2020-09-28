@@ -4,22 +4,22 @@ get:
   tags:
     - invitations
   parameters:
-    - $ref: '#/components/parameters/requestId.yaml'
-    - $ref: '#/components/parameters/orgId.yaml'
-    - $ref: '#/components/parameters/invitationId.yaml'
+    - $ref: '#/components/parameters/requestId'
+    - $ref: '#/components/parameters/orgId'
+    - $ref: '#/components/parameters/invitationId'
   responses:
     '200':
       description: Приглашение найдено
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/Invitation.yaml'
+            $ref: '#/components/schemas/Invitation'
     '404':
       description: Приглашение не найдено
     '403':
       description: Данные недоступны
     '400':
-      $ref: '#/components/responses/BadRequest.yaml'
+      $ref: '#/components/responses/BadRequest'
 
 patch:
   summary: Отозвать приглашение
@@ -27,9 +27,9 @@ patch:
   tags:
     - invitations
   parameters:
-    - $ref: '#/components/parameters/requestId.yaml'
-    - $ref: '#/components/parameters/orgId.yaml'
-    - $ref: '#/components/parameters/invitationId.yaml'
+    - $ref: '#/components/parameters/requestId'
+    - $ref: '#/components/parameters/orgId'
+    - $ref: '#/components/parameters/invitationId'
   requestBody:
     content:
       application/json:
@@ -68,4 +68,4 @@ patch:
     '403':
       description: Операция недоступна
     '400':
-      $ref: '#/components/responses/BadRequest.yaml'
+      $ref: '#/components/responses/BadRequest'

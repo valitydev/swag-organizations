@@ -3,4 +3,4 @@ in: path
 description: Идентификатор пользователя
 required: true
 schema:
-  $ref: '#/components/schemas/UserId.yaml'
+  $ref: '#/components/schemas/UserId'

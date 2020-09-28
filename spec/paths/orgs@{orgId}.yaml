@@ -4,16 +4,16 @@ get:
   tags:
     - orgs
   parameters:
-    - $ref: '#/components/parameters/requestId.yaml'
-    - $ref: '#/components/parameters/orgId.yaml'
+    - $ref: '#/components/parameters/requestId'
+    - $ref: '#/components/parameters/orgId'
   responses:
     '200':
       description: Организация найдена
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/Organization.yaml'
+            $ref: '#/components/schemas/Organization'
     '404':
       description: Организация не найдена
     '400':
-      $ref: '#/components/responses/BadRequest.yaml'
+      $ref: '#/components/responses/BadRequest'

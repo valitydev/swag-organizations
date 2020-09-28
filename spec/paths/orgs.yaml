@@ -4,21 +4,21 @@ post:
   tags:
     - orgs
   parameters:
-    - $ref: '#/components/parameters/requestId.yaml'
-    - $ref: '#/components/parameters/idempotencyKey.yaml'
+    - $ref: '#/components/parameters/requestId'
+    - $ref: '#/components/parameters/idempotencyKey'
   requestBody:
     description: Данные организации
     required: true
     content:
         application/json:
           schema:
-            $ref: '#/components/schemas/Organization.yaml'
+            $ref: '#/components/schemas/Organization'
   responses:
     '201':
       description: Организация создана
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/Organization.yaml'
+            $ref: '#/components/schemas/Organization'
     '400':
-      $ref: '#/components/responses/BadRequest.yaml'
+      $ref: '#/components/responses/BadRequest'

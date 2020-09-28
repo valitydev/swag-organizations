@@ -4,6 +4,6 @@ required:
   - member
 properties:
   org:
-    $ref: '#/components/schemas/Organization.yaml'
+    $ref: '#/components/schemas/Organization'
   member:
-    $ref: '#/components/schemas/Member.yaml'
+    $ref: '#/components/schemas/Member'

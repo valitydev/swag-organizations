@@ -4,19 +4,19 @@ get:
   tags:
     - orgs
   parameters:
-    - $ref: '#/components/parameters/requestId.yaml'
-    - $ref: '#/components/parameters/orgId.yaml'
+    - $ref: '#/components/parameters/requestId'
+    - $ref: '#/components/parameters/orgId'
   responses:
     '200':
       description: Получены данные членства
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/OrganizationMembership.yaml'
+            $ref: '#/components/schemas/OrganizationMembership'
     '404':
       description: Организация не найдена
     '400':
-      $ref: '#/components/responses/BadRequest.yaml'
+      $ref: '#/components/responses/BadRequest'
 
 delete:
   summary: Отменить своё членство в организации
@@ -24,8 +24,8 @@ delete:
   tags:
     - orgs
   parameters:
-    - $ref: '#/components/parameters/requestId.yaml'
-    - $ref: '#/components/parameters/orgId.yaml'
+    - $ref: '#/components/parameters/requestId'
+    - $ref: '#/components/parameters/orgId'
   responses:
     '204':
       description: Членство отменено
@@ -34,4 +34,4 @@ delete:
     '403':
       description: Операция недоступна
     '400':
-      $ref: '#/components/responses/BadRequest.yaml'
+      $ref: '#/components/responses/BadRequest'
