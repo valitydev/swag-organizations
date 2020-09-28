@@ -7,7 +7,7 @@ allOf:
       - expiresAt
     properties:
       id:
-        $ref: './InvitationId.yaml'
+        $ref: '#/parameters/invitationId.yaml'
       createdAt:
         description: Дата и время создания
         type: string
@@ -18,10 +18,10 @@ allOf:
         type: string
         format: date-time
       invitee:
-        $ref: './Invitee.yaml'
+        $ref: '#/schemas/Invitee.yaml'
       acceptToken:
         allOf:
-          - $ref: './InvitationAcceptToken.yaml'
+          - $ref: '#/schemas/InvitationAcceptToken.yaml'
           - readOnly: true
       metadata:
         description: |
@@ -30,4 +30,4 @@ allOf:
         type: object
         example:
           mailTemplate: 'v2.beta'
-  - $ref: './InvitationStatus.yaml'
+  - $ref: '#/schemas/InvitationStatus.yaml'

@@ -3,4 +3,4 @@ required:
   - invitation
 properties:
   invitation:
-    $ref: './InvitationAcceptToken.yaml'
+    $ref: '#/schemas/InvitationAcceptToken.yaml'

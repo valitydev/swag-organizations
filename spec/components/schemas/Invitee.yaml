@@ -15,9 +15,9 @@ properties:
         enum:
           - EMail
       email:
-        $ref: './UserEmail.yaml'
+        $ref: '#/schemas/UserEmail.yaml'
   roles:
     allOf:
       - description: |
           Роли, которые будут назначены сотруднику после принятия им приглашения
-      - $ref: './MemberRoleSet.yaml'
+      - $ref: '#/schemas/MemberRoleSet.yaml'
