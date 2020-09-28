@@ -20,9 +20,9 @@ properties:
     maxLength: 100
     example: 'stolovka3'
   owner:
-    allOf:
-      - description: Идентификатор пользователя-владельца организации
+    x-rebillyMerge:
       - $ref: '#/components/schemas/UserId'
+      - description: Идентификатор пользователя-владельца организации
   metadata:
     description: |
       Произвольный, специфичный для клиента API и непрозрачный для системы набор данных, ассоциированных с
