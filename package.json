@@ -6,7 +6,8 @@
     "build": "node ./scripts/build.js",
     "swagger": "swagger-repo",
     "test": "swagger-repo validate",
-    "start": "gulp serve"
+    "start": "gulp serve",
+    "redoc": "redoc-cli"
   },
   "devDependencies": {
     "connect": "^3.7.0",
@@ -20,6 +21,8 @@
     "portfinder": "^1.0.25",
     "shelljs": "^0.8.3",
     "swagger-repo": "^2.0.0-rc.15",
-    "swagger-ui": "^3.24.2"
+    "swagger-ui": "^3.24.2",
+    "@redocly/openapi-cli": "^0.12.7",
+    "redoc-cli": "^0.9.8"
   }
 }
