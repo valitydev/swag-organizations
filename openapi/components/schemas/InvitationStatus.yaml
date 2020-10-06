@@ -11,4 +11,5 @@ discriminator:
 properties:
   status:
     description: Статус приглашения
+    type: string
     readOnly: true
