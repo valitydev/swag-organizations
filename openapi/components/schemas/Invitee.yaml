@@ -17,7 +17,10 @@ properties:
       email:
         $ref: './UserEmail.yaml'
   roles:
-    allOf:
-      - $ref: './MemberRoleSet.yaml'
-      - description: |
-          Роли, которые будут назначены сотруднику после принятия им приглашения
+    $ref: './MemberRoleSet.yaml'
+
+#    TODO [a.romanov]
+#    allOf:
+#      - $ref: './MemberRoleSet.yaml'
+#      - description: |
+#          Роли, которые будут назначены сотруднику после принятия им приглашения
