@@ -23,6 +23,13 @@ properties:
     allOf:
       - description: Идентификатор пользователя-владельца организации
       - $ref: './UserId.yaml'
+  party:
+    description: |
+      Идентификатор [участника](https://developer.rbk.money/api/#tag/Parties), которым заведует
+      данная организация
+    type: string
+    minLength: 1
+    maxLength: 40
   metadata:
     description: |
       Произвольный, специфичный для клиента API и непрозрачный для системы набор данных, ассоциированных с
