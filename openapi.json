@@ -1225,14 +1225,13 @@
             }
           },
           "roles": {
-            "allOf": [
-              {
-                "description": "Роли, которые будут назначены сотруднику после принятия им приглашения\n"
-              },
-              {
-                "$ref": "#/components/schemas/MemberRoleSet"
-              }
-            ]
+            "description": "Роли, которые будут назначены сотруднику после принятия им приглашения\n",
+            "type": "array",
+            "minItems": 1,
+            "uniqueItems": true,
+            "items": {
+              "$ref": "#/components/schemas/MemberRole"
+            }
           }
         }
       },
