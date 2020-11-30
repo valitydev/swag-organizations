@@ -1,0 +1,10 @@
+type: object
+required:
+  - results
+properties:
+  continuationToken:
+    $ref: '../schemas/ContinuationToken.yaml'
+  results:
+    type: array
+    items:
+      $ref: '../schemas/Organization.yaml'

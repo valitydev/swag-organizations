@@ -5,20 +5,19 @@ get:
     - orgs
   parameters:
     - $ref: '../components/parameters/requestId.yaml'
+    - in: query
+      name: limit
+      schema:
+        type: integer
+        format: int32
+    - $ref: '../components/parameters/continuationToken.yaml'
   responses:
     '200':
       description: Найдены доступные организации
       content:
         application/json:
           schema:
-            type: object
-            required:
-              - results
-            properties:
-              results:
-                type: array
-                items:
-                  $ref: '../components/schemas/Organization.yaml'
+            $ref: '../components/responses/OrganizationSearchResult.yaml'
     '400':
       $ref: '../components/responses/BadRequest.yaml'
 
