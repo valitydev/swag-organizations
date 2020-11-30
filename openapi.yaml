@@ -193,20 +193,19 @@ paths:
         - orgs
       parameters:
         - $ref: '#/components/parameters/requestId'
+        - in: query
+          name: limit
+          schema:
+            type: integer
+            format: int32
+        - $ref: '#/components/parameters/continuationToken'
       responses:
         '200':
           description: Найдены доступные организации
           content:
             application/json:
               schema:
-                type: object
-                required:
-                  - results
-                properties:
-                  results:
-                    type: array
-                    items:
-                      $ref: '#/components/schemas/Organization'
+                $ref: '#/components/schemas/OrganizationSearchResult'
         '400':
           $ref: '#/components/responses/BadRequest'
     post:
@@ -713,6 +712,12 @@ components:
         minLength: 4
         maxLength: 64
         example: RQID-Z08G3EFE5DZ429VVO755BM19D51
+    continuationToken:
+      name: continuationToken
+      in: query
+      required: false
+      schema:
+        $ref: '#/components/schemas/ContinuationToken'
     orgId:
       name: orgId
       in: path
@@ -754,6 +759,15 @@ components:
       schema:
         $ref: '#/components/schemas/InvitationId'
   schemas:
+    ContinuationToken:
+      description: >
+        Токен, сигнализирующий о том, что в ответе передана только часть данных.
+
+        Для получения следующей части нужно повторно обратиться к сервису,
+        указав тот же набор условий и полученый токен.
+
+        Если токена нет, получена последняя часть данных.
+      type: string
     OrganizationId:
       description: Идентификатор организации
       type: string
@@ -813,6 +827,17 @@ components:
           type: object
           example:
             displayName: НИИДАР Столовая №3
+    OrganizationSearchResult:
+      type: object
+      required:
+        - results
+      properties:
+        continuationToken:
+          $ref: '#/components/schemas/ContinuationToken'
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/Organization'
     InvitationAcceptToken:
       type: string
       minLength: 1
