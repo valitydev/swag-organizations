@@ -336,6 +336,36 @@ paths:
           $ref: '#/components/responses/BadRequest'
         '404':
           description: Организация не найдена
+    patch:
+      summary: Обновление значений организации
+      operationId: patchOrg
+      tags:
+        - orgs
+      parameters:
+        - $ref: '#/components/parameters/requestId'
+        - $ref: '#/components/parameters/orgId'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  description: Название организации
+                  type: string
+      responses:
+        '200':
+          description: Организация успешно обновлена
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Organization'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '403':
+          description: Операция недоступна
+        '404':
+          description: Организация не найдена
   '/orgs/{orgId}/roles':
     get:
       summary: Перечислить доступные роли в организации
