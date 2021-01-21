@@ -372,10 +372,10 @@
                 "schema": {
                   "type": "object",
                   "required": [
-                    "results"
+                    "result"
                   ],
                   "properties": {
-                    "results": {
+                    "result": {
                       "type": "array",
                       "items": {
                         "$ref": "#/components/schemas/Role"
@@ -462,10 +462,10 @@
                 "schema": {
                   "type": "object",
                   "required": [
-                    "results"
+                    "result"
                   ],
                   "properties": {
-                    "results": {
+                    "result": {
                       "type": "array",
                       "items": {
                         "$ref": "#/components/schemas/Member"
@@ -721,10 +721,10 @@
                 "schema": {
                   "type": "object",
                   "required": [
-                    "results"
+                    "result"
                   ],
                   "properties": {
-                    "results": {
+                    "result": {
                       "type": "array",
                       "items": {
                         "$ref": "#/components/schemas/Invitation"
@@ -1099,13 +1099,13 @@
       "OrganizationSearchResult": {
         "type": "object",
         "required": [
-          "results"
+          "result"
         ],
         "properties": {
           "continuationToken": {
             "$ref": "#/components/schemas/ContinuationToken"
           },
-          "results": {
+          "result": {
             "type": "array",
             "items": {
               "$ref": "#/components/schemas/Organization"
