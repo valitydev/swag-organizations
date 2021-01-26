@@ -837,6 +837,7 @@ components:
         owner:
           allOf:
             - description: Идентификатор пользователя-владельца организации
+            - readOnly: true
             - $ref: '#/components/schemas/UserId'
         party:
           description: >
@@ -848,6 +849,7 @@ components:
           type: string
           minLength: 1
           maxLength: 40
+          readOnly: true
         metadata:
           description: >
             Произвольный, специфичный для клиента API и непрозрачный для системы

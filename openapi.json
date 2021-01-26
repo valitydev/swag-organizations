@@ -1077,6 +1077,9 @@
                 "description": "Идентификатор пользователя-владельца организации"
               },
               {
+                "readOnly": true
+              },
+              {
                 "$ref": "#/components/schemas/UserId"
               }
             ]
@@ -1085,7 +1088,8 @@
             "description": "Идентификатор [участника](https://developer.rbk.money/api/#tag/Parties), которым заведует\nданная организация\n",
             "type": "string",
             "minLength": 1,
-            "maxLength": 40
+            "maxLength": 40,
+            "readOnly": true
           },
           "metadata": {
             "description": "Произвольный, специфичный для клиента API и непрозрачный для системы набор данных, ассоциированных с\nданной организацией\n",
