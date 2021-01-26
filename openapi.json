@@ -370,18 +370,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "type": "object",
-                  "required": [
-                    "result"
-                  ],
-                  "properties": {
-                    "result": {
-                      "type": "array",
-                      "items": {
-                        "$ref": "#/components/schemas/Role"
-                      }
-                    }
-                  }
+                  "$ref": "#/components/schemas/RoleAvailableListResult"
                 }
               }
             }
@@ -460,18 +449,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "type": "object",
-                  "required": [
-                    "result"
-                  ],
-                  "properties": {
-                    "result": {
-                      "type": "array",
-                      "items": {
-                        "$ref": "#/components/schemas/Member"
-                      }
-                    }
-                  }
+                  "$ref": "#/components/schemas/MemberOrgListResult"
                 }
               }
             }
@@ -719,18 +697,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "type": "object",
-                  "required": [
-                    "result"
-                  ],
-                  "properties": {
-                    "result": {
-                      "type": "array",
-                      "items": {
-                        "$ref": "#/components/schemas/Invitation"
-                      }
-                    }
-                  }
+                  "$ref": "#/components/schemas/InvitationListResult"
                 }
               }
             }
@@ -1264,6 +1231,34 @@
           }
         }
       },
+      "RoleAvailableListResult": {
+        "type": "object",
+        "required": [
+          "result"
+        ],
+        "properties": {
+          "result": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Role"
+            }
+          }
+        }
+      },
+      "MemberOrgListResult": {
+        "type": "object",
+        "required": [
+          "result"
+        ],
+        "properties": {
+          "result": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Member"
+            }
+          }
+        }
+      },
       "InvitationStatusName": {
         "type": "string",
         "enum": [
@@ -1438,9 +1433,6 @@
       },
       "InvitationStatus": {
         "type": "object",
-        "required": [
-          "status"
-        ],
         "discriminator": {
           "propertyName": "status",
           "mapping": {
@@ -1454,6 +1446,20 @@
           "status": {
             "description": "Статус приглашения",
             "readOnly": true
+          }
+        }
+      },
+      "InvitationListResult": {
+        "type": "object",
+        "required": [
+          "result"
+        ],
+        "properties": {
+          "result": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Invitation"
+            }
           }
         }
       }

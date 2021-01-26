@@ -381,14 +381,7 @@ paths:
           content:
             application/json:
               schema:
-                type: object
-                required:
-                  - result
-                properties:
-                  result:
-                    type: array
-                    items:
-                      $ref: '#/components/schemas/Role'
+                $ref: '#/components/schemas/RoleAvailableListResult'
         '400':
           $ref: '#/components/responses/BadRequest'
         '403':
@@ -433,14 +426,7 @@ paths:
           content:
             application/json:
               schema:
-                type: object
-                required:
-                  - result
-                properties:
-                  result:
-                    type: array
-                    items:
-                      $ref: '#/components/schemas/Member'
+                $ref: '#/components/schemas/MemberOrgListResult'
         '400':
           $ref: '#/components/responses/BadRequest'
         '403':
@@ -584,14 +570,7 @@ paths:
           content:
             application/json:
               schema:
-                type: object
-                required:
-                  - result
-                properties:
-                  result:
-                    type: array
-                    items:
-                      $ref: '#/components/schemas/Invitation'
+                $ref: '#/components/schemas/InvitationListResult'
         '400':
           $ref: '#/components/responses/BadRequest'
         '403':
@@ -979,6 +958,24 @@ components:
           uniqueItems: true
           items:
             $ref: '#/components/schemas/ResourceScopeId'
+    RoleAvailableListResult:
+      type: object
+      required:
+        - result
+      properties:
+        result:
+          type: array
+          items:
+            $ref: '#/components/schemas/Role'
+    MemberOrgListResult:
+      type: object
+      required:
+        - result
+      properties:
+        result:
+          type: array
+          items:
+            $ref: '#/components/schemas/Member'
     InvitationStatusName:
       type: string
       enum:
@@ -1096,8 +1093,6 @@ components:
               maxLength: 1000
     InvitationStatus:
       type: object
-      required:
-        - status
       discriminator:
         propertyName: status
         mapping:
@@ -1109,6 +1104,15 @@ components:
         status:
           description: Статус приглашения
           readOnly: true
+    InvitationListResult:
+      type: object
+      required:
+        - result
+      properties:
+        result:
+          type: array
+          items:
+            $ref: '#/components/schemas/Invitation'
   responses:
     BadRequest:
       description: Переданы ошибочные данные
