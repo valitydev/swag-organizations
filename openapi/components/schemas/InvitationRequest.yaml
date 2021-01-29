@@ -1,0 +1,14 @@
+description: Приглашение для сотрудника
+required:
+  - invitee
+properties:
+  invitee:
+    $ref: '../schemas/Invitee.yaml'
+  metadata:
+    description: |
+      Произвольный, специфичный для клиента API и непрозрачный для системы набор данных, ассоциированных с
+      данным приглашением
+    type: object
+    example:
+      mailTemplate: 'v2.beta'
+
