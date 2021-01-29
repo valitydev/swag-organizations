@@ -592,7 +592,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/Invitation'
+              $ref: '#/components/schemas/InvitationRequest'
       responses:
         '201':
           description: Приглашение сформировано
@@ -984,77 +984,50 @@ components:
         - Expired
         - Revoked
       default: Pending
-    InvitationId:
-      description: Идентификатор приглашения
-      type: string
-      minLength: 1
-      maxLength: 40
-      example: 1KgIYBGsCgq
-      readOnly: true
-    Invitee:
-      description: Приглашаемый пользователь
-      type: object
-      required:
-        - contact
-        - roles
-      properties:
-        contact:
-          description: Контактные данные для отправки приглашения
-          type: object
-          required:
-            - type
-            - email
-          properties:
-            type:
-              enum:
-                - EMail
-            email:
-              $ref: '#/components/schemas/UserEmail'
-        roles:
-          description: >
-            Роли, которые будут назначены сотруднику после принятия им
-            приглашения
-          type: array
-          minItems: 1
-          uniqueItems: true
-          items:
-            $ref: '#/components/schemas/MemberRole'
     Invitation:
       description: Приглашение для сотрудника
-      allOf:
-        - type: object
-          required:
-            - id
-            - createdAt
-            - expiresAt
-          properties:
-            id:
-              $ref: '#/components/schemas/InvitationId'
-            createdAt:
-              description: Дата и время создания
-              type: string
-              format: date-time
-              readOnly: true
-            expiresAt:
-              description: Дата и время истечения срока принятия
-              type: string
-              format: date-time
-            invitee:
-              $ref: '#/components/schemas/Invitee'
-            acceptToken:
-              allOf:
-                - $ref: '#/components/schemas/InvitationAcceptToken'
-                - readOnly: true
-            metadata:
-              description: >
-                Произвольный, специфичный для клиента API и непрозрачный для
-                системы набор данных, ассоциированных с
+      required:
+        - id
+        - createdAt
+        - expiresAt
+        - status
+        - invitee
+      discriminator:
+        propertyName: status
+        mapping:
+          Pending: '#/components/schemas/InvitationPending'
+          Accepted: '#/components/schemas/InvitationAccepted'
+          Expired: '#/components/schemas/InvitationExpired'
+          Revoked: '#/components/schemas/InvitationRevoked'
+      properties:
+        id:
+          $ref: '#/components/schemas/InvitationId'
+        createdAt:
+          description: Дата и время создания
+          type: string
+          format: date-time
+          readOnly: true
+        expiresAt:
+          description: Дата и время истечения срока принятия
+          type: string
+          format: date-time
+        invitee:
+          $ref: '#/components/schemas/Invitee'
+        acceptToken:
+          allOf:
+            - $ref: '#/components/schemas/InvitationAcceptToken'
+            - readOnly: true
+        metadata:
+          description: >
+            Произвольный, специфичный для клиента API и непрозрачный для системы
+            набор данных, ассоциированных с
 
-                данным приглашением
-              type: object
-              example:
-                mailTemplate: v2.beta
-        - $ref: '#/components/schemas/InvitationStatus'
+            данным приглашением
+          type: object
+          example:
+            mailTemplate: v2.beta
+        status:
+          $ref: '#/components/schemas/InvitationStatusName'
     InvitationPending:
       allOf:
         - $ref: '#/components/schemas/Invitation'
@@ -1091,19 +1064,41 @@ components:
               description: Причина отзыва приглашения
               type: string
               maxLength: 1000
-    InvitationStatus:
+    InvitationId:
+      description: Идентификатор приглашения
+      type: string
+      minLength: 1
+      maxLength: 40
+      example: 1KgIYBGsCgq
+      readOnly: true
+    Invitee:
+      description: Приглашаемый пользователь
       type: object
-      discriminator:
-        propertyName: status
-        mapping:
-          Pending: '#/components/schemas/InvitationPending'
-          Accepted: '#/components/schemas/InvitationAccepted'
-          Expired: '#/components/schemas/InvitationExpired'
-          Revoked: '#/components/schemas/InvitationRevoked'
+      required:
+        - contact
+        - roles
       properties:
-        status:
-          description: Статус приглашения
-          readOnly: true
+        contact:
+          description: Контактные данные для отправки приглашения
+          type: object
+          required:
+            - type
+            - email
+          properties:
+            type:
+              enum:
+                - EMail
+            email:
+              $ref: '#/components/schemas/UserEmail'
+        roles:
+          description: >
+            Роли, которые будут назначены сотруднику после принятия им
+            приглашения
+          type: array
+          minItems: 1
+          uniqueItems: true
+          items:
+            $ref: '#/components/schemas/MemberRole'
     InvitationListResult:
       type: object
       required:
@@ -1113,6 +1108,22 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/Invitation'
+    InvitationRequest:
+      description: Приглашение для сотрудника
+      required:
+        - invitee
+      properties:
+        invitee:
+          $ref: '#/components/schemas/Invitee'
+        metadata:
+          description: >
+            Произвольный, специфичный для клиента API и непрозрачный для системы
+            набор данных, ассоциированных с
+
+            данным приглашением
+          type: object
+          example:
+            mailTemplate: v2.beta
   responses:
     BadRequest:
       description: Переданы ошибочные данные

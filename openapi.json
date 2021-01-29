@@ -736,7 +736,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/Invitation"
+                "$ref": "#/components/schemas/InvitationRequest"
               }
             }
           }
@@ -1269,102 +1269,63 @@
         ],
         "default": "Pending"
       },
-      "InvitationId": {
-        "description": "Идентификатор приглашения",
-        "type": "string",
-        "minLength": 1,
-        "maxLength": 40,
-        "example": "1KgIYBGsCgq",
-        "readOnly": true
-      },
-      "Invitee": {
-        "description": "Приглашаемый пользователь",
-        "type": "object",
-        "required": [
-          "contact",
-          "roles"
-        ],
-        "properties": {
-          "contact": {
-            "description": "Контактные данные для отправки приглашения",
-            "type": "object",
-            "required": [
-              "type",
-              "email"
-            ],
-            "properties": {
-              "type": {
-                "enum": [
-                  "EMail"
-                ]
-              },
-              "email": {
-                "$ref": "#/components/schemas/UserEmail"
-              }
-            }
-          },
-          "roles": {
-            "description": "Роли, которые будут назначены сотруднику после принятия им приглашения\n",
-            "type": "array",
-            "minItems": 1,
-            "uniqueItems": true,
-            "items": {
-              "$ref": "#/components/schemas/MemberRole"
-            }
-          }
-        }
-      },
       "Invitation": {
         "description": "Приглашение для сотрудника",
-        "allOf": [
-          {
-            "type": "object",
-            "required": [
-              "id",
-              "createdAt",
-              "expiresAt"
-            ],
-            "properties": {
-              "id": {
-                "$ref": "#/components/schemas/InvitationId"
+        "required": [
+          "id",
+          "createdAt",
+          "expiresAt",
+          "status",
+          "invitee"
+        ],
+        "discriminator": {
+          "propertyName": "status",
+          "mapping": {
+            "Pending": "#/components/schemas/InvitationPending",
+            "Accepted": "#/components/schemas/InvitationAccepted",
+            "Expired": "#/components/schemas/InvitationExpired",
+            "Revoked": "#/components/schemas/InvitationRevoked"
+          }
+        },
+        "properties": {
+          "id": {
+            "$ref": "#/components/schemas/InvitationId"
+          },
+          "createdAt": {
+            "description": "Дата и время создания",
+            "type": "string",
+            "format": "date-time",
+            "readOnly": true
+          },
+          "expiresAt": {
+            "description": "Дата и время истечения срока принятия",
+            "type": "string",
+            "format": "date-time"
+          },
+          "invitee": {
+            "$ref": "#/components/schemas/Invitee"
+          },
+          "acceptToken": {
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/InvitationAcceptToken"
               },
-              "createdAt": {
-                "description": "Дата и время создания",
-                "type": "string",
-                "format": "date-time",
+              {
                 "readOnly": true
-              },
-              "expiresAt": {
-                "description": "Дата и время истечения срока принятия",
-                "type": "string",
-                "format": "date-time"
-              },
-              "invitee": {
-                "$ref": "#/components/schemas/Invitee"
-              },
-              "acceptToken": {
-                "allOf": [
-                  {
-                    "$ref": "#/components/schemas/InvitationAcceptToken"
-                  },
-                  {
-                    "readOnly": true
-                  }
-                ]
-              },
-              "metadata": {
-                "description": "Произвольный, специфичный для клиента API и непрозрачный для системы набор данных, ассоциированных с\nданным приглашением\n",
-                "type": "object",
-                "example": {
-                  "mailTemplate": "v2.beta"
-                }
               }
+            ]
+          },
+          "metadata": {
+            "description": "Произвольный, специфичный для клиента API и непрозрачный для системы набор данных, ассоциированных с\nданным приглашением\n",
+            "type": "object",
+            "example": {
+              "mailTemplate": "v2.beta"
             }
           },
-          {
-            "$ref": "#/components/schemas/InvitationStatus"
+          "status": {
+            "$ref": "#/components/schemas/InvitationStatusName"
           }
-        ]
+        }
       },
       "InvitationPending": {
         "allOf": [
@@ -1431,21 +1392,48 @@
           }
         ]
       },
-      "InvitationStatus": {
+      "InvitationId": {
+        "description": "Идентификатор приглашения",
+        "type": "string",
+        "minLength": 1,
+        "maxLength": 40,
+        "example": "1KgIYBGsCgq",
+        "readOnly": true
+      },
+      "Invitee": {
+        "description": "Приглашаемый пользователь",
         "type": "object",
-        "discriminator": {
-          "propertyName": "status",
-          "mapping": {
-            "Pending": "#/components/schemas/InvitationPending",
-            "Accepted": "#/components/schemas/InvitationAccepted",
-            "Expired": "#/components/schemas/InvitationExpired",
-            "Revoked": "#/components/schemas/InvitationRevoked"
-          }
-        },
+        "required": [
+          "contact",
+          "roles"
+        ],
         "properties": {
-          "status": {
-            "description": "Статус приглашения",
-            "readOnly": true
+          "contact": {
+            "description": "Контактные данные для отправки приглашения",
+            "type": "object",
+            "required": [
+              "type",
+              "email"
+            ],
+            "properties": {
+              "type": {
+                "enum": [
+                  "EMail"
+                ]
+              },
+              "email": {
+                "$ref": "#/components/schemas/UserEmail"
+              }
+            }
+          },
+          "roles": {
+            "description": "Роли, которые будут назначены сотруднику после принятия им приглашения\n",
+            "type": "array",
+            "minItems": 1,
+            "uniqueItems": true,
+            "items": {
+              "$ref": "#/components/schemas/MemberRole"
+            }
           }
         }
       },
@@ -1459,6 +1447,24 @@
             "type": "array",
             "items": {
               "$ref": "#/components/schemas/Invitation"
+            }
+          }
+        }
+      },
+      "InvitationRequest": {
+        "description": "Приглашение для сотрудника",
+        "required": [
+          "invitee"
+        ],
+        "properties": {
+          "invitee": {
+            "$ref": "#/components/schemas/Invitee"
+          },
+          "metadata": {
+            "description": "Произвольный, специфичный для клиента API и непрозрачный для системы набор данных, ассоциированных с\nданным приглашением\n",
+            "type": "object",
+            "example": {
+              "mailTemplate": "v2.beta"
             }
           }
         }
