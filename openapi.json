@@ -1163,7 +1163,6 @@
         "description": "Набор ролей сотрудника",
         "type": "array",
         "minItems": 1,
-        "uniqueItems": true,
         "items": {
           "$ref": "#/components/schemas/MemberRole"
         }
@@ -1224,7 +1223,6 @@
           "scopes": {
             "description": "Возможные области действия для роли",
             "type": "array",
-            "uniqueItems": true,
             "items": {
               "$ref": "#/components/schemas/ResourceScopeId"
             }
@@ -1430,7 +1428,6 @@
             "description": "Роли, которые будут назначены сотруднику после принятия им приглашения\n",
             "type": "array",
             "minItems": 1,
-            "uniqueItems": true,
             "items": {
               "$ref": "#/components/schemas/MemberRole"
             }

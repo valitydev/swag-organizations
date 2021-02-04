@@ -910,7 +910,6 @@ components:
       description: Набор ролей сотрудника
       type: array
       minItems: 1
-      uniqueItems: true
       items:
         $ref: '#/components/schemas/MemberRole'
     Member:
@@ -955,7 +954,6 @@ components:
         scopes:
           description: Возможные области действия для роли
           type: array
-          uniqueItems: true
           items:
             $ref: '#/components/schemas/ResourceScopeId'
     RoleAvailableListResult:
@@ -1096,7 +1094,6 @@ components:
             приглашения
           type: array
           minItems: 1
-          uniqueItems: true
           items:
             $ref: '#/components/schemas/MemberRole'
     InvitationListResult:
