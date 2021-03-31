@@ -1,25 +1,19 @@
-post:
-  summary: Назначить сотруднику роль
-  operationId: assignMemberRole
+delete:
+  summary: Снять роль с сотрудника
+  operationId: removeMemberRole
   tags:
     - members
   parameters:
     - $ref: '../components/parameters/requestId.yaml'
     - $ref: '../components/parameters/orgId.yaml'
     - $ref: '../components/parameters/userId.yaml'
-  requestBody:
-    content:
-      application/json:
-        schema:
-          $ref: '../components/schemas/MemberRole.yaml'
+    - $ref: '../components/parameters/memberRoleId.yaml'
   responses:
-    '201':
-      description: Роль назначена
-      content:
-        application/json:
-          schema:
-            $ref: '../components/schemas/MemberRole.yaml'
+    '204':
+      description: Сотрудник более не обладает указанной ролью
     '422':
+      # TODO
+      # Может упростить пока и не энфорсить это требование на API?
       description: Невозможно совершить операцию
       content:
         application/json:
@@ -29,7 +23,7 @@ post:
               code:
                 type: string
                 enum:
-                  - invalidRole
+                  - onlyRoleLeft
               message:
                 description: Человекочитаемое описание ошибки
                 type: string

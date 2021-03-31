@@ -1,8 +1,11 @@
 description: Роль сотрудника в организации
 type: object
 required:
+  - id
   - roleId
 properties:
+  id:
+    $ref: './MemberRoleId.yaml'
   roleId:
     $ref: './RoleId.yaml'
   scope:
