@@ -540,7 +540,7 @@
       }
     },
     "/orgs/{orgId}/members/{userId}/roles": {
-      "put": {
+      "post": {
         "summary": "Назначить сотруднику роль",
         "operationId": "assignMemberRole",
         "tags": [
@@ -567,8 +567,15 @@
           }
         },
         "responses": {
-          "204": {
-            "description": "Роль назначена"
+          "201": {
+            "description": "Роль назначена",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MemberRole"
+                }
+              }
+            }
           },
           "400": {
             "$ref": "#/components/responses/BadRequest"
@@ -589,7 +596,7 @@
                     "code": {
                       "type": "string",
                       "enum": [
-                        "onlyRoleLeft"
+                        "invalidRole"
                       ]
                     },
                     "message": {
@@ -602,7 +609,9 @@
             }
           }
         }
-      },
+      }
+    },
+    "/orgs/{orgId}/members/{userId}/roles/{memberRoleId}": {
       "delete": {
         "summary": "Снять роль с сотрудника",
         "operationId": "removeMemberRole",
@@ -618,17 +627,11 @@
           },
           {
             "$ref": "#/components/parameters/userId"
+          },
+          {
+            "$ref": "#/components/parameters/memberRoleId"
           }
         ],
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/MemberRole"
-              }
-            }
-          }
-        },
         "responses": {
           "204": {
             "description": "Сотрудник более не обладает указанной ролью"
@@ -652,7 +655,7 @@
                     "code": {
                       "type": "string",
                       "enum": [
-                        "invalidRole"
+                        "onlyRoleLeft"
                       ]
                     },
                     "message": {
@@ -981,6 +984,15 @@
           "$ref": "#/components/schemas/UserId"
         }
       },
+      "memberRoleId": {
+        "name": "memberRoleId",
+        "in": "path",
+        "description": "Идентификатор роли пользователя в организации",
+        "required": true,
+        "schema": {
+          "$ref": "#/components/schemas/MemberRoleId"
+        }
+      },
       "invitationId": {
         "name": "invitationId",
         "in": "path",
@@ -1110,6 +1122,14 @@
         "format": "email",
         "example": "laura.palmer@niidar.su"
       },
+      "MemberRoleId": {
+        "description": "Идентификатор роли пользователя в организации",
+        "type": "string",
+        "minLength": 1,
+        "maxLength": 40,
+        "example": "05ab0300-c8dd-4274-b722-32ecfe48b5c0",
+        "readOnly": true
+      },
       "RoleId": {
         "description": "Идентификатор роли",
         "type": "string",
@@ -1131,9 +1151,13 @@
         "description": "Роль сотрудника в организации",
         "type": "object",
         "required": [
+          "id",
           "roleId"
         ],
         "properties": {
+          "id": {
+            "$ref": "#/components/schemas/MemberRoleId"
+          },
           "roleId": {
             "$ref": "#/components/schemas/RoleId"
           },

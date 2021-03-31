@@ -475,7 +475,7 @@ paths:
         '404':
           description: Организация не найдена
   '/orgs/{orgId}/members/{userId}/roles':
-    put:
+    post:
       summary: Назначить сотруднику роль
       operationId: assignMemberRole
       tags:
@@ -490,8 +490,12 @@ paths:
             schema:
               $ref: '#/components/schemas/MemberRole'
       responses:
-        '204':
+        '201':
           description: Роль назначена
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MemberRole'
         '400':
           $ref: '#/components/responses/BadRequest'
         '403':
@@ -508,10 +512,11 @@ paths:
                   code:
                     type: string
                     enum:
-                      - onlyRoleLeft
+                      - invalidRole
                   message:
                     description: Человекочитаемое описание ошибки
                     type: string
+  '/orgs/{orgId}/members/{userId}/roles/{memberRoleId}':
     delete:
       summary: Снять роль с сотрудника
       operationId: removeMemberRole
@@ -521,11 +526,7 @@ paths:
         - $ref: '#/components/parameters/requestId'
         - $ref: '#/components/parameters/orgId'
         - $ref: '#/components/parameters/userId'
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/MemberRole'
+        - $ref: '#/components/parameters/memberRoleId'
       responses:
         '204':
           description: Сотрудник более не обладает указанной ролью
@@ -545,7 +546,7 @@ paths:
                   code:
                     type: string
                     enum:
-                      - invalidRole
+                      - onlyRoleLeft
                   message:
                     description: Человекочитаемое описание ошибки
                     type: string
@@ -760,6 +761,13 @@ components:
       required: true
       schema:
         $ref: '#/components/schemas/UserId'
+    memberRoleId:
+      name: memberRoleId
+      in: path
+      description: Идентификатор роли пользователя в организации
+      required: true
+      schema:
+        $ref: '#/components/schemas/MemberRoleId'
     invitationId:
       name: invitationId
       in: path
@@ -870,6 +878,13 @@ components:
       maxLength: 100
       format: email
       example: laura.palmer@niidar.su
+    MemberRoleId:
+      description: Идентификатор роли пользователя в организации
+      type: string
+      minLength: 1
+      maxLength: 40
+      example: 05ab0300-c8dd-4274-b722-32ecfe48b5c0
+      readOnly: true
     RoleId:
       description: Идентификатор роли
       type: string
@@ -887,8 +902,11 @@ components:
       description: Роль сотрудника в организации
       type: object
       required:
+        - id
         - roleId
       properties:
+        id:
+          $ref: '#/components/schemas/MemberRoleId'
         roleId:
           $ref: '#/components/schemas/RoleId'
         scope:
