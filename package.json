@@ -1,15 +1,16 @@
 {
-  "name": "rbkmoney-organizations-api",
+  "name": "@vality/swag-organizations",
   "version": "1.0.0",
-  "dependencies": {
-    "@redocly/openapi-cli": "^1.0.0-beta.9",
-    "json-merge-patch": "^1.0.0",
-    "redoc-cli": "^0.9.8"
-  },
-  "private": true,
   "scripts": {
     "start": "openapi preview-docs",
     "build": "openapi bundle -o web_deploy/openapi.yaml && openapi bundle -o web_deploy/openapi.json",
-    "validate": "openapi lint"
+    "validate": "openapi lint",
+    "codegen": "vality-openapi generate ./web_deploy/openapi.json"
+  },
+  "devDependencies": {
+    "@redocly/openapi-cli": "^1.0.0-beta.9",
+    "@vality/openapi-generator-cli": "0.1.1-fbfe66e.0",
+    "json-merge-patch": "^1.0.0",
+    "redoc-cli": "^0.9.8"
   }
 }
