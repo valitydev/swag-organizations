@@ -9,7 +9,7 @@
   },
   "devDependencies": {
     "@redocly/openapi-cli": "^1.0.0-beta.9",
-    "@vality/openapi-generator-cli": "0.1.1-fbfe66e.0",
+    "@vality/openapi-generator-cli": "^2.0.0",
     "json-merge-patch": "^1.0.0",
     "redoc-cli": "^0.9.8"
   }
