@@ -1,7 +1,5 @@
-description: Идентификатор роли
+description: |
+  Идентификатор роли. 
+  Актуальный список идентификаторов [здесь](https://github.com/valitydev/bouncer-policies/blob/master/policies/service/authz/roles/data.yaml)
 type: string
-enum:
-  - Administrator
-  - Accountant
-  - Integrator
-  - Manager
+example: Manager
