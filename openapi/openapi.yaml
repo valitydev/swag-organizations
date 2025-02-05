@@ -1,14 +1,9 @@
 openapi: 3.0.3
 info:
   version: 1.0.0
-  title: RBKmoney Organizations API
+  title: Organizations API
   description:
     $ref: './docs/api.md'
-  termsOfService: 'https://rbk.money/'
-  contact:
-    name: RBKmoney Support Team
-    email: support@rbk.money
-    url: 'https://developer.rbk.money'
   license:
     name: Apache 2.0
     url: https://www.apache.org/licenses/LICENSE-2.0.html
@@ -54,8 +49,6 @@ paths:
     $ref: ./paths/invitations.yaml
   /orgs/{orgId}/invitations/{invitationId}:
     $ref: ./paths/invitation.yaml
-servers:
-  - url: 'https://api.rbk.money/org/v1'
 components:
   securitySchemes:
     bearer:

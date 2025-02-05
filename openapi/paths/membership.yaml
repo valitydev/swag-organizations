@@ -47,7 +47,7 @@ post:
           schema:
             type: string
             format: uri
-            example: 'https://api.rbk.money/org/v1/user/membership/or_af9e76uc5b47h8b154.19b8xa61dc94'
+            example: '/org/v1/user/membership/or_af9e76uc5b47h8b154.19b8xa61dc94'
     '422':
       description: Невозможно совершить операцию
       content:
