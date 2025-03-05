@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "scripts": {
     "start": "redocly preview-docs",
+    "build-docs": "redocly build-docs",
     "build:yaml": "redocly bundle openapi/openapi.yaml -o web_deploy/openapi",
     "build:json": "npm run build:yaml -- --ext json",
     "build": "npm run build:yaml && npm run build:json",
