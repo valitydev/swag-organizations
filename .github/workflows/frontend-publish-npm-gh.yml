@@ -1,4 +1,4 @@
-name: "Frontend: Publish"
+name: "Frontend: Publish NPM & Github Pages"
 
 on:
   push:

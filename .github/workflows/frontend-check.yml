@@ -1,4 +1,4 @@
-name: "Frontend: PR"
+name: "Frontend: Check"
 
 on:
   pull_request:
@@ -14,7 +14,7 @@ jobs:
       - run: npm install
       - name: Bundle OpenAPI & Build Redocly Docs
         run: npm run build-web
-      - name: Validate OpenAPI
+      - name: Lint OpenAPI
         run: npm run validate
       - name: Check Angular OpenAPI Library
         run: npm run build-ng-lib
