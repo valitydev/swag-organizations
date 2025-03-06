@@ -1,0 +1,1599 @@
+{
+  "openapi": "3.0.3",
+  "info": {
+    "version": "1.0.0",
+    "title": "Organizations API",
+    "description": "Organizations API является интерфейсом для управления различными\nаспектами вашей организации. Все изменения состояния организации, будь то\nприглашение новых сотрудников, добавление ролей уже существующим сотрудникам\nили настройка области их ответственности осуществляются с помощью вызовов\nсоответствующих методов API. Любые сторонние приложения, включая ваш личный кабинет,\nявляются внешними приложениями-клиентами.\n\nМы предоставляем REST API поверх HTTP-протокола, схема которого описывается в\nсоответствии со стандартом [OpenAPI 3][OAS3].\nКоды возврата описываются соответствующими HTTP-статусами. Платформа принимает и\nвозвращает значения JSON в теле запросов и ответов.\n\n[OAS3]: https://swagger.io/specification/\n\n## Формат содержимого\n\nЛюбой запрос к API должен выполняться в кодировке UTF-8 и с указанием\nсодержимого в формате JSON.\n\n```\nContent-Type: application/json; charset=utf-8\n```\n\n## Запросы\n\nЛюбой вызов методов API обязан предваряться предоставлением уникального для клиента\nплатформы идентификатора запроса. Данный ID передается в соответствующем заголовке каждого\nHTTP-запроса:\n\n```\n    X-Request-ID: RQID-Z08G3EFE5DZ429VVO755BM19D51\n```\n\nМы требуем его, чтобы иметь возможность отследить жизненный цикл любого отдельного запроса\nв системе, когда того требуют задачи аудита или обращения в техническую поддержку.\n\n### Идемпотентность\n\nПри совершении некоторых запросов вы можете указать _ключ идемпотентности_ – уникальный набор\nсимволов для обеспечения идемпотентной обработки запросов.\n\n```\n    X-Idempotency-Key: 881D:08BA\n```\n\nДаже если платформа получит множество запросов на совершение определённой операции с одним и тем\nже значением ключа идемпотентности, эта операция будет выполнена _не более чем один_ раз.\nТаким образом, в случае кратковременных проблем с сетевой доступностью вы можете отправлять запросы\nповторно и быть уверенными в том, что, например, приглашение новому сотруднику в итоге будет\nотправлено только один раз.\n",
+    "license": {
+      "name": "Apache 2.0",
+      "url": "https://www.apache.org/licenses/LICENSE-2.0.html"
+    }
+  },
+  "security": [
+    {
+      "bearer": []
+    }
+  ],
+  "tags": [
+    {
+      "name": "orgs",
+      "x-displayName": "Организации"
+    },
+    {
+      "name": "members",
+      "x-displayName": "Сотрудники"
+    },
+    {
+      "name": "invitations",
+      "x-displayName": "Приглашения"
+    },
+    {
+      "name": "roles",
+      "x-displayName": "Роли"
+    },
+    {
+      "name": "error-codes",
+      "x-displayName": "Коды ошибок",
+      "description": "## Общие ошибки\n\nОшибки возникающие при попытках совершения недопустимых операций, операций с невалидными объектами или несуществующими ресурсами. Имеют следующий вид:\n\n```json\n{\n    \"code\": \"string\",\n    \"message\": \"string\"\n}\n```\n\nВ поле `message` содержится информация по произошедшей ошибке. Например:\n\n```json\n{\n    \"code\": \"invalidRequest\",\n    \"message\": \"Property 'name' is required.\"\n}\n```\n\n## Ошибки обработки запросов\n\nВ процессе обработки запросов силами нашей платформы могут происходить различные непредвиденные ситуации. Об их появлении платформа сигнализирует по протоколу HTTP соответствующими [статусами][5xx], обозначающими ошибки сервера.\n\n|  Код    |  Описание  |\n| ------- | ---------- |\n| **500** | В процессе обработки платформой запроса возникла непредвиденная ситуация. При получении подобного кода ответа мы рекомендуем обратиться в техническую поддержку. |\n| **503** | Платформа временно недоступна и не готова обслуживать данный запрос. Запрос гарантированно не выполнен, при получении подобного кода ответа попробуйте выполнить его позднее, когда доступность платформы будет восстановлена. |\n| **504** | Платформа превысила допустимое время обработки запроса, результат запроса не определён. Попробуйте отправить запрос повторно или выяснить результат выполнения исходного запроса, если повторное исполнение запроса нежелательно. |\n\n[5xx]: https://tools.ietf.org/html/rfc7231#section-6.6\n\n\nЕсли вы получили ошибку, которой нет в данном описании, обратитесь в техническую поддержку.\n"
+    }
+  ],
+  "paths": {
+    "/user/membership": {
+      "get": {
+        "summary": "Перечислить доступные организации",
+        "operationId": "listOrgMembership",
+        "tags": [
+          "orgs"
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/requestId"
+          },
+          {
+            "in": "query",
+            "name": "limit",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "$ref": "#/components/parameters/continuationToken"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Найдены доступные организации",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/OrganizationSearchResult"
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/BadRequest"
+          }
+        }
+      },
+      "post": {
+        "summary": "Вступить в организацию по приглашению",
+        "operationId": "joinOrg",
+        "tags": [
+          "orgs"
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/requestId"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/OrganizationJoinRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Пользователь вступил в организацию",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/OrganizationMembership"
+                }
+              }
+            },
+            "headers": {
+              "location": {
+                "description": "URL членства в организации",
+                "required": true,
+                "schema": {
+                  "type": "string",
+                  "format": "uri",
+                  "example": "/org/v1/user/membership/or_af9e76uc5b47h8b154.19b8xa61dc94"
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/BadRequest"
+          },
+          "403": {
+            "description": "Вступление невозможно"
+          },
+          "422": {
+            "description": "Невозможно совершить операцию",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "code": {
+                      "type": "string",
+                      "enum": [
+                        "invitationExpired"
+                      ]
+                    },
+                    "message": {
+                      "description": "Человекочитаемое описание ошибки",
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/user/membership/{orgId}": {
+      "get": {
+        "summary": "Посмотреть своё членство в организации",
+        "operationId": "inquireOrgMembership",
+        "tags": [
+          "orgs"
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/requestId"
+          },
+          {
+            "$ref": "#/components/parameters/orgId"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Получены данные членства",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/OrganizationMembership"
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/BadRequest"
+          },
+          "404": {
+            "description": "Организация не найдена"
+          }
+        }
+      },
+      "delete": {
+        "summary": "Отменить своё членство в организации",
+        "operationId": "cancelOrgMembership",
+        "tags": [
+          "orgs"
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/requestId"
+          },
+          {
+            "$ref": "#/components/parameters/orgId"
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Членство отменено"
+          },
+          "400": {
+            "$ref": "#/components/responses/BadRequest"
+          },
+          "403": {
+            "description": "Операция недоступна"
+          },
+          "404": {
+            "description": "Организация не найдена"
+          }
+        }
+      }
+    },
+    "/user/context": {
+      "get": {
+        "summary": "Получить активную организацию",
+        "operationId": "getContext",
+        "tags": [
+          "orgs"
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/requestId"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Контекст пользователя",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MemberContext"
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/BadRequest"
+          },
+          "403": {
+            "description": "Данные недоступны"
+          }
+        }
+      },
+      "put": {
+        "summary": "Переключить активную организацию",
+        "operationId": "switchContext",
+        "tags": [
+          "orgs"
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/requestId"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/OrganizationSwitchRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "204": {
+            "description": "Огранизация успешно переключена"
+          },
+          "400": {
+            "$ref": "#/components/responses/BadRequest"
+          },
+          "403": {
+            "description": "Операция недоступна"
+          },
+          "404": {
+            "description": "Организация не найдена"
+          }
+        }
+      }
+    },
+    "/orgs": {
+      "post": {
+        "summary": "Создать новую организацию",
+        "operationId": "createOrg",
+        "tags": [
+          "orgs"
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/requestId"
+          },
+          {
+            "$ref": "#/components/parameters/idempotencyKey"
+          }
+        ],
+        "requestBody": {
+          "description": "Данные организации",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Organization"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Организация создана",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Organization"
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/BadRequest"
+          }
+        }
+      }
+    },
+    "/orgs/{orgId}": {
+      "get": {
+        "summary": "Получить данные организации",
+        "operationId": "getOrg",
+        "tags": [
+          "orgs"
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/requestId"
+          },
+          {
+            "$ref": "#/components/parameters/orgId"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Организация найдена",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Organization"
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/BadRequest"
+          },
+          "404": {
+            "description": "Организация не найдена"
+          }
+        }
+      },
+      "patch": {
+        "summary": "Обновление значений организации",
+        "operationId": "patchOrg",
+        "tags": [
+          "orgs"
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/requestId"
+          },
+          {
+            "$ref": "#/components/parameters/orgId"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "description": "Название организации",
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Организация успешно обновлена",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Organization"
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/BadRequest"
+          },
+          "403": {
+            "description": "Операция недоступна"
+          },
+          "404": {
+            "description": "Организация не найдена"
+          }
+        }
+      }
+    },
+    "/orgs/{orgId}/roles": {
+      "get": {
+        "summary": "Перечислить доступные роли в организации",
+        "operationId": "listOrgRoles",
+        "tags": [
+          "roles"
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/requestId"
+          },
+          {
+            "$ref": "#/components/parameters/orgId"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Найдены роли",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RoleAvailableListResult"
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/BadRequest"
+          },
+          "403": {
+            "description": "Данные недоступны"
+          },
+          "404": {
+            "description": "Организация не найдена"
+          }
+        }
+      }
+    },
+    "/orgs/{orgId}/roles/{roleId}": {
+      "get": {
+        "summary": "Получить данные о роли",
+        "operationId": "getOrgRole",
+        "tags": [
+          "roles"
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/requestId"
+          },
+          {
+            "$ref": "#/components/parameters/orgId"
+          },
+          {
+            "$ref": "#/components/parameters/roleId"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Найдены роли",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Role"
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/BadRequest"
+          },
+          "403": {
+            "description": "Данные недоступны"
+          },
+          "404": {
+            "description": "Организация не найдена"
+          }
+        }
+      }
+    },
+    "/orgs/{orgId}/members": {
+      "get": {
+        "summary": "Перечислить сотрудников организации",
+        "operationId": "listOrgMembers",
+        "tags": [
+          "members"
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/requestId"
+          },
+          {
+            "$ref": "#/components/parameters/orgId"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Найдены сотрудники",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MemberOrgListResult"
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/BadRequest"
+          },
+          "403": {
+            "description": "Данные недоступны"
+          },
+          "404": {
+            "description": "Организация не найдена"
+          }
+        }
+      }
+    },
+    "/orgs/{orgId}/members/{userId}": {
+      "get": {
+        "summary": "Получить данные сотрудника",
+        "operationId": "getOrgMember",
+        "tags": [
+          "members"
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/requestId"
+          },
+          {
+            "$ref": "#/components/parameters/orgId"
+          },
+          {
+            "$ref": "#/components/parameters/userId"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Данные найдены",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Member"
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/BadRequest"
+          },
+          "403": {
+            "description": "Данные недоступны"
+          },
+          "404": {
+            "description": "Сотрудник не найден"
+          }
+        }
+      },
+      "delete": {
+        "summary": "Исключить сотрудника из организации",
+        "operationId": "expelOrgMember",
+        "tags": [
+          "members"
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/requestId"
+          },
+          {
+            "$ref": "#/components/parameters/orgId"
+          },
+          {
+            "$ref": "#/components/parameters/userId"
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Сотрудник более не состоит в организации"
+          },
+          "400": {
+            "$ref": "#/components/responses/BadRequest"
+          },
+          "403": {
+            "description": "Операция недоступна"
+          },
+          "404": {
+            "description": "Организация не найдена"
+          }
+        }
+      }
+    },
+    "/orgs/{orgId}/members/{userId}/roles": {
+      "post": {
+        "summary": "Назначить сотруднику роль",
+        "operationId": "assignMemberRole",
+        "tags": [
+          "members"
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/requestId"
+          },
+          {
+            "$ref": "#/components/parameters/orgId"
+          },
+          {
+            "$ref": "#/components/parameters/userId"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/MemberRole"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Роль назначена",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MemberRole"
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/BadRequest"
+          },
+          "403": {
+            "description": "Операция недоступна"
+          },
+          "404": {
+            "description": "Сотрудник не найден"
+          },
+          "422": {
+            "description": "Невозможно совершить операцию",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "code": {
+                      "type": "string",
+                      "enum": [
+                        "invalidRole"
+                      ]
+                    },
+                    "message": {
+                      "description": "Человекочитаемое описание ошибки",
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/orgs/{orgId}/members/{userId}/roles/{memberRoleId}": {
+      "delete": {
+        "summary": "Снять роль с сотрудника",
+        "operationId": "removeMemberRole",
+        "tags": [
+          "members"
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/requestId"
+          },
+          {
+            "$ref": "#/components/parameters/orgId"
+          },
+          {
+            "$ref": "#/components/parameters/userId"
+          },
+          {
+            "$ref": "#/components/parameters/memberRoleId"
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Сотрудник более не обладает указанной ролью"
+          },
+          "400": {
+            "$ref": "#/components/responses/BadRequest"
+          },
+          "403": {
+            "description": "Операция недоступна"
+          },
+          "404": {
+            "description": "Сотрудник не найден"
+          },
+          "422": {
+            "description": "Невозможно совершить операцию",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "code": {
+                      "type": "string",
+                      "enum": [
+                        "onlyRoleLeft"
+                      ]
+                    },
+                    "message": {
+                      "description": "Человекочитаемое описание ошибки",
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/orgs/{orgId}/invitations": {
+      "get": {
+        "summary": "Перечислить приглашения",
+        "operationId": "listInvitations",
+        "tags": [
+          "invitations"
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/requestId"
+          },
+          {
+            "$ref": "#/components/parameters/orgId"
+          },
+          {
+            "description": "Фильтр по статусу приглашения",
+            "name": "status",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "$ref": "#/components/schemas/InvitationStatusName"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Найдены приглашения",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/InvitationListResult"
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/BadRequest"
+          },
+          "403": {
+            "description": "Операция недоступна"
+          },
+          "404": {
+            "description": "Организация не найдена"
+          }
+        }
+      },
+      "post": {
+        "summary": "Сформировать приглашение",
+        "operationId": "createInvitation",
+        "tags": [
+          "invitations"
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/requestId"
+          },
+          {
+            "$ref": "#/components/parameters/idempotencyKey"
+          },
+          {
+            "$ref": "#/components/parameters/orgId"
+          }
+        ],
+        "requestBody": {
+          "description": "Данные нового приглашения",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/InvitationRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Приглашение сформировано",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Invitation"
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/BadRequest"
+          },
+          "403": {
+            "description": "Операция недоступна"
+          },
+          "404": {
+            "description": "Организация не найдена"
+          },
+          "422": {
+            "description": "Невозможно совершить операцию",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "code": {
+                      "type": "string",
+                      "enum": [
+                        "invalidRole"
+                      ]
+                    },
+                    "message": {
+                      "description": "Человекочитаемое описание ошибки",
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/orgs/{orgId}/invitations/{invitationId}": {
+      "get": {
+        "summary": "Получить данные приглашения",
+        "operationId": "getInvitation",
+        "tags": [
+          "invitations"
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/requestId"
+          },
+          {
+            "$ref": "#/components/parameters/orgId"
+          },
+          {
+            "$ref": "#/components/parameters/invitationId"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Приглашение найдено",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Invitation"
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/BadRequest"
+          },
+          "403": {
+            "description": "Данные недоступны"
+          },
+          "404": {
+            "description": "Приглашение не найдено"
+          }
+        }
+      },
+      "patch": {
+        "summary": "Отозвать приглашение",
+        "operationId": "revokeInvitation",
+        "tags": [
+          "invitations"
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/requestId"
+          },
+          {
+            "$ref": "#/components/parameters/orgId"
+          },
+          {
+            "$ref": "#/components/parameters/invitationId"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "status"
+                ],
+                "properties": {
+                  "status": {
+                    "type": "string",
+                    "enum": [
+                      "Revoked"
+                    ]
+                  },
+                  "reason": {
+                    "description": "Причина отзыва приглашения",
+                    "type": "string",
+                    "maxLength": 1000
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "204": {
+            "description": "Приглашение отозвано"
+          },
+          "400": {
+            "$ref": "#/components/responses/BadRequest"
+          },
+          "403": {
+            "description": "Операция недоступна"
+          },
+          "404": {
+            "description": "Приглашение не найдено"
+          },
+          "422": {
+            "description": "Отзыв невозможен",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "code": {
+                      "type": "string",
+                      "enum": [
+                        "invalidStatus"
+                      ]
+                    },
+                    "message": {
+                      "description": "Человекочитаемое описание ошибки",
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "securitySchemes": {
+      "bearer": {
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "JWT",
+        "description": "Для аутентификации вызовов мы используем [JWT](https://jwt.io). Токен доступа передается в заголовке.\n```shell\n Authorization: Bearer {JWT}\n```\nЗапросы к данному API авторизуются сессионным токеном доступа, который вы получаете в результате аутентификации в личном кабинете.\n"
+      }
+    },
+    "parameters": {
+      "requestId": {
+        "name": "X-Request-ID",
+        "in": "header",
+        "description": "Уникальный идентификатор запроса к системе",
+        "required": true,
+        "schema": {
+          "type": "string",
+          "minLength": 4,
+          "maxLength": 64,
+          "example": "RQID-Z08G3EFE5DZ429VVO755BM19D51"
+        }
+      },
+      "continuationToken": {
+        "name": "continuationToken",
+        "in": "query",
+        "required": false,
+        "schema": {
+          "$ref": "#/components/schemas/ContinuationToken"
+        }
+      },
+      "orgId": {
+        "name": "orgId",
+        "in": "path",
+        "description": "Идентификатор организации",
+        "required": true,
+        "schema": {
+          "$ref": "#/components/schemas/OrganizationId"
+        }
+      },
+      "idempotencyKey": {
+        "name": "X-Idempotency-Key",
+        "in": "header",
+        "description": "Уникальный ключ для обеспечения единоразовой (идемпотентной) обработки операции.\n",
+        "required": false,
+        "schema": {
+          "type": "string",
+          "minLength": 4,
+          "maxLength": 64,
+          "example": "881D:08BA"
+        }
+      },
+      "roleId": {
+        "name": "roleId",
+        "in": "path",
+        "description": "Идентификатор роли",
+        "required": true,
+        "schema": {
+          "$ref": "#/components/schemas/RoleId"
+        }
+      },
+      "userId": {
+        "name": "userId",
+        "in": "path",
+        "description": "Идентификатор пользователя",
+        "required": true,
+        "schema": {
+          "$ref": "#/components/schemas/UserId"
+        }
+      },
+      "memberRoleId": {
+        "name": "memberRoleId",
+        "in": "path",
+        "description": "Идентификатор роли пользователя в организации",
+        "required": true,
+        "schema": {
+          "$ref": "#/components/schemas/MemberRoleId"
+        }
+      },
+      "invitationId": {
+        "name": "invitationId",
+        "in": "path",
+        "description": "Идентификатор приглашения",
+        "required": true,
+        "schema": {
+          "$ref": "#/components/schemas/InvitationId"
+        }
+      }
+    },
+    "schemas": {
+      "ContinuationToken": {
+        "description": "Токен, сигнализирующий о том, что в ответе передана только часть данных.\nДля получения следующей части нужно повторно обратиться к сервису, указав тот же набор условий и полученый токен.\nЕсли токена нет, получена последняя часть данных.\n",
+        "type": "string"
+      },
+      "OrganizationId": {
+        "description": "Идентификатор организации",
+        "type": "string",
+        "minLength": 1,
+        "maxLength": 40,
+        "example": "or_af9e76uc5b47h8b154.19b8xa61dc94",
+        "readOnly": true
+      },
+      "UserId": {
+        "description": "Идентификатор пользователя",
+        "type": "string",
+        "minLength": 1,
+        "maxLength": 40,
+        "example": "fjbvae05:44d0-4oz4-8745.6dql4xc6a75c",
+        "readOnly": true
+      },
+      "Organization": {
+        "description": "Модель организации",
+        "type": "object",
+        "required": [
+          "id",
+          "createdAt",
+          "name",
+          "owner"
+        ],
+        "properties": {
+          "id": {
+            "$ref": "#/components/schemas/OrganizationId"
+          },
+          "createdAt": {
+            "description": "Дата и время создания организации",
+            "type": "string",
+            "format": "date-time",
+            "readOnly": true
+          },
+          "name": {
+            "description": "Название организации в человекочитаемом виде",
+            "type": "string",
+            "minLength": 4,
+            "maxLength": 100,
+            "example": "stolovka3"
+          },
+          "owner": {
+            "allOf": [
+              {
+                "description": "Идентификатор пользователя-владельца организации"
+              },
+              {
+                "readOnly": true
+              },
+              {
+                "$ref": "#/components/schemas/UserId"
+              }
+            ]
+          },
+          "party": {
+            "description": "Идентификатор участника, которым заведует данная организация\n",
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 40,
+            "readOnly": true
+          },
+          "metadata": {
+            "description": "Произвольный, специфичный для клиента API и непрозрачный для системы набор данных, ассоциированных с\nданной организацией\n",
+            "type": "object",
+            "example": {
+              "displayName": "НИИДАР Столовая №3"
+            }
+          }
+        }
+      },
+      "OrganizationSearchResult": {
+        "type": "object",
+        "required": [
+          "result"
+        ],
+        "properties": {
+          "continuationToken": {
+            "$ref": "#/components/schemas/ContinuationToken"
+          },
+          "result": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Organization"
+            }
+          }
+        }
+      },
+      "InvitationAcceptToken": {
+        "type": "string",
+        "minLength": 1,
+        "maxLength": 4000,
+        "description": "Токен для принятия приглашения пользователем",
+        "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJsYXVyYS5wYWxtZXJAbmlpZGFyLnN1IiwiaWF0IjoxNTE2MjM5MDIyLCJvcmciOiJvcl9hZjllNzZ1YzViNDdoOGIxNTQuMTliOHhhNjFkYzk0Iiwicm9sZXMiOltdfQ.p0kQj5AuogXuBwBvAFWdk8beI5JThXksRH7kFUjvRMk\n"
+      },
+      "OrganizationJoinRequest": {
+        "type": "object",
+        "required": [
+          "invitation"
+        ],
+        "properties": {
+          "invitation": {
+            "$ref": "#/components/schemas/InvitationAcceptToken"
+          }
+        }
+      },
+      "UserEmail": {
+        "description": "Адрес электронной почты пользователя в организации",
+        "type": "string",
+        "minLength": 4,
+        "maxLength": 100,
+        "format": "email",
+        "example": "laura.palmer@niidar.su"
+      },
+      "MemberRoleId": {
+        "description": "Идентификатор роли пользователя в организации",
+        "type": "string",
+        "minLength": 1,
+        "maxLength": 40,
+        "example": "05ab0300-c8dd-4274-b722-32ecfe48b5c0",
+        "readOnly": true
+      },
+      "RoleId": {
+        "description": "Идентификатор роли. \nАктуальный список идентификаторов [здесь](https://github.com/valitydev/bouncer-policies/blob/master/policies/service/authz/roles/data.yaml)\n",
+        "type": "string",
+        "example": "Manager"
+      },
+      "ResourceScopeId": {
+        "description": "Идентификатор ограничения для роли",
+        "type": "string",
+        "enum": [
+          "Shop"
+        ]
+      },
+      "MemberRole": {
+        "description": "Роль сотрудника в организации",
+        "type": "object",
+        "required": [
+          "id",
+          "roleId"
+        ],
+        "properties": {
+          "id": {
+            "$ref": "#/components/schemas/MemberRoleId"
+          },
+          "roleId": {
+            "$ref": "#/components/schemas/RoleId"
+          },
+          "scope": {
+            "description": "Область действия этой роли",
+            "type": "object",
+            "required": [
+              "id",
+              "resourceId"
+            ],
+            "properties": {
+              "id": {
+                "$ref": "#/components/schemas/ResourceScopeId"
+              },
+              "resourceId": {
+                "description": "Идентификатор доступного в рамках области ресурса",
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 40,
+                "example": "sh_27839dt482v28ab7escze113y858dp"
+              }
+            }
+          }
+        }
+      },
+      "MemberRoleSet": {
+        "description": "Набор ролей сотрудника",
+        "type": "array",
+        "minItems": 1,
+        "items": {
+          "$ref": "#/components/schemas/MemberRole"
+        }
+      },
+      "Member": {
+        "description": "Сотрудник организации",
+        "type": "object",
+        "required": [
+          "id",
+          "userEmail",
+          "roles"
+        ],
+        "properties": {
+          "id": {
+            "$ref": "#/components/schemas/UserId"
+          },
+          "userEmail": {
+            "$ref": "#/components/schemas/UserEmail"
+          },
+          "roles": {
+            "$ref": "#/components/schemas/MemberRoleSet"
+          }
+        }
+      },
+      "OrganizationMembership": {
+        "type": "object",
+        "required": [
+          "org",
+          "member"
+        ],
+        "properties": {
+          "org": {
+            "$ref": "#/components/schemas/Organization"
+          },
+          "member": {
+            "$ref": "#/components/schemas/Member"
+          }
+        }
+      },
+      "MemberContext": {
+        "type": "object",
+        "required": [
+          "organizationId"
+        ],
+        "properties": {
+          "organizationId": {
+            "$ref": "#/components/schemas/OrganizationId"
+          }
+        }
+      },
+      "OrganizationSwitchRequest": {
+        "type": "object",
+        "required": [
+          "organizationId"
+        ],
+        "properties": {
+          "organizationId": {
+            "description": "Идентификатор организации",
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 40,
+            "example": "or_af9e76uc5b47h8b154.19b8xa61dc94"
+          }
+        }
+      },
+      "Role": {
+        "description": "Роль в организации",
+        "type": "object",
+        "required": [
+          "id",
+          "name"
+        ],
+        "properties": {
+          "id": {
+            "$ref": "#/components/schemas/RoleId"
+          },
+          "name": {
+            "description": "Название роли в человекочитаемом виде",
+            "type": "string",
+            "minLength": 4,
+            "maxLength": 100,
+            "example": "Shop Manager"
+          },
+          "scopes": {
+            "description": "Возможные области действия для роли",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ResourceScopeId"
+            }
+          }
+        }
+      },
+      "RoleAvailableListResult": {
+        "type": "object",
+        "required": [
+          "result"
+        ],
+        "properties": {
+          "result": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Role"
+            }
+          }
+        }
+      },
+      "MemberOrgListResult": {
+        "type": "object",
+        "required": [
+          "result"
+        ],
+        "properties": {
+          "result": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Member"
+            }
+          }
+        }
+      },
+      "InvitationStatusName": {
+        "type": "string",
+        "enum": [
+          "Pending",
+          "Accepted",
+          "Expired",
+          "Revoked"
+        ],
+        "default": "Pending"
+      },
+      "Invitation": {
+        "description": "Приглашение для сотрудника",
+        "required": [
+          "id",
+          "createdAt",
+          "expiresAt",
+          "status",
+          "invitee"
+        ],
+        "discriminator": {
+          "propertyName": "status",
+          "mapping": {
+            "Pending": "#/components/schemas/InvitationPending",
+            "Accepted": "#/components/schemas/InvitationAccepted",
+            "Expired": "#/components/schemas/InvitationExpired",
+            "Revoked": "#/components/schemas/InvitationRevoked"
+          }
+        },
+        "properties": {
+          "id": {
+            "$ref": "#/components/schemas/InvitationId"
+          },
+          "createdAt": {
+            "description": "Дата и время создания",
+            "type": "string",
+            "format": "date-time",
+            "readOnly": true
+          },
+          "expiresAt": {
+            "description": "Дата и время истечения срока принятия",
+            "type": "string",
+            "format": "date-time"
+          },
+          "invitee": {
+            "$ref": "#/components/schemas/Invitee"
+          },
+          "acceptToken": {
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/InvitationAcceptToken"
+              },
+              {
+                "readOnly": true
+              }
+            ]
+          },
+          "metadata": {
+            "description": "Произвольный, специфичный для клиента API и непрозрачный для системы набор данных, ассоциированных с\nданным приглашением\n",
+            "type": "object",
+            "example": {
+              "mailTemplate": "v2.beta"
+            }
+          },
+          "status": {
+            "$ref": "#/components/schemas/InvitationStatusName"
+          }
+        }
+      },
+      "InvitationPending": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/Invitation"
+          }
+        ]
+      },
+      "InvitationAccepted": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/Invitation"
+          },
+          {
+            "type": "object",
+            "properties": {
+              "acceptedAt": {
+                "description": "Дата и время принятия приглашения",
+                "type": "string",
+                "format": "date-time"
+              },
+              "member": {
+                "description": "Сотрудник организации, принявший приглашение",
+                "type": "object",
+                "required": [
+                  "id"
+                ],
+                "properties": {
+                  "id": {
+                    "$ref": "#/components/schemas/UserId"
+                  }
+                }
+              }
+            }
+          }
+        ]
+      },
+      "InvitationExpired": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/Invitation"
+          }
+        ]
+      },
+      "InvitationRevoked": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/Invitation"
+          },
+          {
+            "type": "object",
+            "properties": {
+              "revokedAt": {
+                "description": "Дата и время отзыва приглашения",
+                "type": "string",
+                "format": "date-time"
+              },
+              "reason": {
+                "description": "Причина отзыва приглашения",
+                "type": "string",
+                "maxLength": 1000
+              }
+            }
+          }
+        ]
+      },
+      "InvitationId": {
+        "description": "Идентификатор приглашения",
+        "type": "string",
+        "minLength": 1,
+        "maxLength": 40,
+        "example": "1KgIYBGsCgq",
+        "readOnly": true
+      },
+      "Invitee": {
+        "description": "Приглашаемый пользователь",
+        "type": "object",
+        "required": [
+          "contact",
+          "roles"
+        ],
+        "properties": {
+          "contact": {
+            "description": "Контактные данные для отправки приглашения",
+            "type": "object",
+            "required": [
+              "type",
+              "email"
+            ],
+            "properties": {
+              "type": {
+                "enum": [
+                  "EMail"
+                ]
+              },
+              "email": {
+                "$ref": "#/components/schemas/UserEmail"
+              }
+            }
+          },
+          "roles": {
+            "description": "Роли, которые будут назначены сотруднику после принятия им приглашения\n",
+            "type": "array",
+            "minItems": 1,
+            "items": {
+              "$ref": "#/components/schemas/MemberRole"
+            }
+          }
+        }
+      },
+      "InvitationListResult": {
+        "type": "object",
+        "required": [
+          "result"
+        ],
+        "properties": {
+          "result": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Invitation"
+            }
+          }
+        }
+      },
+      "InvitationRequest": {
+        "description": "Приглашение для сотрудника",
+        "required": [
+          "invitee"
+        ],
+        "properties": {
+          "invitee": {
+            "$ref": "#/components/schemas/Invitee"
+          },
+          "metadata": {
+            "description": "Произвольный, специфичный для клиента API и непрозрачный для системы набор данных, ассоциированных с\nданным приглашением\n",
+            "type": "object",
+            "example": {
+              "mailTemplate": "v2.beta"
+            }
+          }
+        }
+      }
+    },
+    "responses": {
+      "BadRequest": {
+        "description": "Переданы ошибочные данные",
+        "content": {
+          "application/json": {
+            "schema": {
+              "description": "Ошибка в переданных данных",
+              "type": "object",
+              "required": [
+                "code"
+              ],
+              "properties": {
+                "code": {
+                  "type": "string",
+                  "enum": [
+                    "invalidRequest"
+                  ]
+                },
+                "message": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
