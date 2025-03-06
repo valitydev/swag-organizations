@@ -1,6 +1,7 @@
 {
   "name": "@vality/swag-organizations",
   "version": "1.0.0",
+  "license": "Apache-2.0",
   "scripts": {
     "start": "redocly preview-docs",
     "bundle:yaml": "redocly bundle openapi/openapi.yaml -o web_deploy/openapi",
