@@ -12,7 +12,7 @@
   },
   "devDependencies": {
     "@redocly/cli": "^1.33.0",
-    "@vality/openapi-generator-cli": "^3.0.1",
+    "@vality/openapi-generator-cli": "^3.0.2",
     "@vality/redocly-utils": "^0.2.0"
   }
 }
