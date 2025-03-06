@@ -3,10 +3,11 @@
   "version": "1.0.0",
   "scripts": {
     "start": "redocly preview-docs",
+    "bundle:yaml": "redocly bundle openapi/openapi.yaml -o web_deploy/openapi",
+    "bundle:json": "npm run bundle:yaml -- --ext json",
     "build-docs": "redocly build-docs -o web_deploy/index.html",
-    "build:yaml": "redocly bundle openapi/openapi.yaml -o web_deploy/openapi",
-    "build:json": "npm run build:yaml -- --ext json",
-    "build": "npm run build:yaml && npm run build:json && npm run build-docs",
+    "build-web": "npm run build && npm run build-docs",
+    "build": "npm run bundle:yaml && npm run bundle:json",
     "validate": "redocly lint",
     "codegen": "vality-openapi generate ./web_deploy/openapi.json"
   },
