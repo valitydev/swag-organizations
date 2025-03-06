@@ -13,7 +13,7 @@ jobs:
       - uses: actions/setup-node@v4
       - run: npm install
       - name: Bundle OpenAPI & Build Redocly Docs
-        run: npm run build-docs
+        run: npm run build-web
       - name: Validate OpenAPI
         run: npm run validate
       - name: Check Angular OpenAPI Library
