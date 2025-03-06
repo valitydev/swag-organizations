@@ -17,4 +17,4 @@ jobs:
       - name: Validate OpenAPI
         run: npm run validate
       - name: Check Angular OpenAPI Library
-        run: npm run codegen
+        run: npm run build-ng-lib
