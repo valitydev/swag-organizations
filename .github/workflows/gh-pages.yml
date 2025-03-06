@@ -1,8 +1,11 @@
 name: Github Pages
 
+# on:
+#   push:
+#     branches: [master]
 on:
-  push:
-    branches: [master]
+  pull_request:
+    branches: ["*"]
 
 jobs:
   publish:
