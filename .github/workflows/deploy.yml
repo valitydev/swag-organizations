@@ -2,7 +2,10 @@ name: Maven Deploy Artifact
 
 on:
   push:
-    branches: ["master", "main"]
+    branches:
+      - 'master'
+      - 'main'
+      - 'epic/**'
 
 jobs:
   deploy:
