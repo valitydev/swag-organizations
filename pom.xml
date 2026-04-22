@@ -20,7 +20,7 @@
 
     <properties>
         <default.package>dev.vality.swag.organizations</default.package>
-        <artifact.name>swag-webhook-events</artifact.name>
+        <artifact.name>swag-organizations</artifact.name>
         <revision>SNAPSHOT</revision>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <maven-plugin-version>1.0.0</maven-plugin-version>
@@ -130,7 +130,7 @@
         <profile>
             <id>server</id>
             <properties>
-                <artifact.name>swag-webhook-events-server</artifact.name>
+                <artifact.name>swag-organizations-server</artifact.name>
             </properties>
             <build>
                 <plugins>
@@ -166,7 +166,7 @@
         <profile>
             <id>client</id>
             <properties>
-                <artifact.name>swag-webhook-events-client</artifact.name>
+                <artifact.name>swag-organizations-client</artifact.name>
             </properties>
             <build>
                 <plugins>
