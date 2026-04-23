@@ -17,7 +17,4 @@ properties:
       email:
         $ref: './UserEmail.yaml'
   roles:
-    x-mergeSchemas:
-      - description: |
-          Роли, которые будут назначены сотруднику после принятия им приглашения
-      - $ref: './MemberRoleSet.yaml'
+      $ref: './MemberRoleSet.yaml'
