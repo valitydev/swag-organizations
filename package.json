@@ -2,6 +2,14 @@
   "name": "@vality/swag-organizations",
   "version": "1.0.0",
   "license": "Apache-2.0",
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.org/"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/valitydev/swag-organizations.git"
+  },
   "scripts": {
     "start": "redocly preview-docs",
     "validate": "redocly lint",
