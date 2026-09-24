@@ -38,7 +38,7 @@ properties:
     type: object
     example:
       displayName: 'НИИДАР Столовая №3'
-  allowedIp:
+  allowedIps:
     description: |
       Список разрешенных ip-адресов
     type: array
