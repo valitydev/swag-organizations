@@ -1137,6 +1137,14 @@
             "example": {
               "displayName": "НИИДАР Столовая №3"
             }
+          },
+          "allowedIps": {
+            "description": "Список разрешенных ip-адресов\n",
+            "type": "array",
+            "uniqueItems": true,
+            "items": {
+              "type": "string"
+            }
           }
         }
       },
