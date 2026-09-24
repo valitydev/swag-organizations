@@ -38,3 +38,10 @@ properties:
     type: object
     example:
       displayName: 'НИИДАР Столовая №3'
+  allowedIp:
+    description: |
+      Список разрешенных ip-адресов
+    type: array
+    uniqueItems: true
+    items:
+      type: string
