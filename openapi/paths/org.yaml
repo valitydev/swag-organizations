@@ -34,6 +34,14 @@ patch:
             name:
               description: Название организации
               type: string
+            allowedIps:
+              description: |
+                Список разрешенных ip-адресов
+              type: array
+              nullable: true
+              uniqueItems: true
+              items:
+                type: string
   responses:
     '200':
       description: Организация успешно обновлена
